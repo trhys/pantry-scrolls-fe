@@ -1,16 +1,19 @@
 import { useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { useGetRecipe } from '../api/recipes.js'
 import { useGetShoppingLists, postAddRecipeToList } from '../api/shoppingLists.js'
+import { useAuth } from '../components/auth.jsx'
 import './recipe.css'
 import formatDate from '../utility/format.js'
 
 export default function Recipe() {
+    const { user } = useAuth()
+    const navigate = useNavigate()
 	let params = useParams()
 	const { data, error, isLoading } = useGetRecipe(params.id)
 
 	/* Get shopping lists for adding */
-	const { data: listData, error: listError } = useGetShoppingLists()
+	const { data: listData, error: listError } = useGetShoppingLists(user)
 
 	const [showAddModal, setShowAddModal] = useState(false)
 	const [selectedList, setSelectedList] = useState('')
@@ -88,7 +91,10 @@ export default function Recipe() {
 			{showAddModal && (
 			<div className="modal-overlay" onClick={() => setShowAddModal(false)}>
 			    <div className="modal-content auth-card" onClick={e => e.stopPropagation()}> 
-				<h3>Add to Shopping List</h3>
+
+              {user ? (
+                <>
+                <h3>Add to Shopping List</h3>
 				<p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', margin: '0.5rem 0 1.5rem 0' }}>
 				    Scale the ingredient quantities and assign them to an active list.
 				</p>
@@ -137,7 +143,21 @@ export default function Recipe() {
 					    {isAdding ? 'Adding...' : 'Confirm Add'}
 					</button>
 				    </div>
-				</form>
+				</form></>
+              ) : (
+                <>
+                <h3>Login to add</h3>
+                <button
+                  type="button"
+                  className="submit-btn"
+                  onClick={() => navigate("/login")}
+                >Log In</button>
+                <button
+                  type="button"
+                  className="submit-btn"
+                  onClick={() => navigate("/signup")}
+                >Sign Up</button></>
+              )}
 			    </div>
 			</div>
 		    )}

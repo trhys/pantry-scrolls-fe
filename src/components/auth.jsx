@@ -37,10 +37,15 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('user_session', session);
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user_session');
-  };
+  const logout = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/tokens/revoke`, { credentials: 'include' })
+      setUser(null)
+      localStorage.removeItem('user_session')
+    } catch (error) {
+      console.error("TOKEN REVOKE FAILURE:", error)
+    }
+  }
 
   return (
     <ctx.Provider value={{ user, login, logout, loading }}>

@@ -15,7 +15,7 @@ export function ShoppingListsPage() {
 	/* delete state */
 	const [deleteTarget, setDeleteTarget] = useState(null)
 
-	const { data, error, isLoading, mutate } = useGetShoppingLists()
+	const { data, error, isLoading, mutate } = useGetShoppingLists(user)
 
 	if (isLoading) return <p>Loading</p>
 	if (error) {

@@ -1,4 +1,29 @@
+import { useNavigate } from 'react-router'
+import { useAuth } from '../components/auth.jsx'
+
 const API_BASE = import.meta.env.VITE_API_URL
+
+export const authFetcher = async (url, opts) => {
+  try {
+    let response = await fetch(url, {...opts, credentials: 'include'})
+    if (response.status === 401) {
+      const ok = refreshSession()
+      if (!ok) throw new Error("Session expired")
+      response = await fetch(url, {...opts, credentials: 'include'})
+    }
+    if (!response.ok) {
+        const data = await response.json() || null
+        throw new Error(`BAD API RESPONSE: ${data}`)
+    }
+
+    if (response.status === 204) return null
+
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
 // Login
 export async function postLogin(email, password) {
@@ -34,3 +59,24 @@ export async function postSignup(email, password, name) {
 		console.log(error)
 	}
 }
+
+// Refresh token
+async function refreshSession() {
+  const { logout } = useAuth()
+  const { navigate } = useNavigate()
+  try {
+    const response = await fetch(`${API_BASE}/api/tokens`, { credentials: "include" })
+    if (response.ok) return true
+
+    // Refresh failed. logout and clear user data
+    logout()
+    navigate("/login")
+    return false
+  } catch (error) {
+    console.error("REFRESH FAILED:", error)
+    return false
+  }
+}
+
+
+

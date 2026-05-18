@@ -1,8 +1,7 @@
 import useSWR from 'swr'
+import { authFetcher } from './auth.js'
 
 const API_BASE = import.meta.env.VITE_API_URL
-
-const authFetcher = (url) => fetch(url, { credentials: 'include' }).then(res => res.json());
 
 // Get user's info for profile page
 export function useGetUserProfile(id) {
@@ -15,18 +14,12 @@ export async function updateSetUserAvatar(file) {
 	try {
 		const formData = new FormData()
 		formData.append("image", file)
-		const response = await fetch(`${API_BASE}/api/users`, {
+		const data = await authFetcher(`${API_BASE}/api/users`, {
 			method: "PUT",
-			credentials: 'include',
 			body: formData
 		})
 
-		if (response.ok) {
-			return { ok: true, message: null }
-		}
-
-		const data = await response.json()
-		return { ok: false, message: data }
+        return { ok: true, message: null }
 	} catch (error) {
 		console.error("FAILED UPDATE REQUEST:", error)
 		return { ok: false, message: error.message }

@@ -1,9 +1,9 @@
 import useSWR from 'swr'
+import { authFetcher } from './auth.js'
 
 const API_BASE = import.meta.env.VITE_API_URL
 
 const fetcher = (url) => fetch(url).then(res => res.json());
-const authFetcher = (ur) => fetch(url, { credentials: 'include' }).then(res => res.json());
 
 // Get recipe feed
 export function useGetRecipeFeed() {
@@ -50,17 +50,12 @@ export async function postRecipe(title, image, ingredients, description, instruc
 		formData.append("payload", body)
 		formData.append("image", image)
 
-		let response = await fetch(`${API_BASE}/api/recipes`, {
+		const data = await authFetcher(`${API_BASE}/api/recipes`, {
 			method: "POST",
-			credentials: 'include',
 			body: formData,
 		})
-
-		const data = await response.json()
 		
-		if (response.ok) {
-			return { id: data.id, ok: true, message: null }
-		}
+        return { id: data.id, ok: true, message: null }
 	} catch (error) {
 		console.log(error)
 		return { id: null, ok: false, message: error }
@@ -83,15 +78,12 @@ export async function putRecipe(id, title, image, ingredients, description, inst
 
 		if (image && typeof image !== 'string') formData.append("image", image)
 
-		let response = await fetch(`${API_BASE}/api/recipes/${id}`, {
+		const data = await authFetcher(`${API_BASE}/api/recipes/${id}`, {
 			method: "PUT",
-			credentials: 'include',
 			body: formData,
 		})
 
-		if (response.ok) {
-			return { id: null, ok: true, message: null }
-		}
+        return { id: null, ok: true, message: null }
 	} catch (error) {
 		console.error("PUT REQUEST ERROR:", error)
 		return { id: null, ok: false, message: error.message }
@@ -101,16 +93,13 @@ export async function putRecipe(id, title, image, ingredients, description, inst
 // Delete recipe
 export async function deleteRecipe(id) {
 	try {
-		let response = await fetch(`${API_BASE}/api/recipes/${id}`, {
+		const data = await authFetcher(`${API_BASE}/api/recipes/${id}`, {
 			method: "DELETE",
-			credentials: "include",
 		})
 
-		if (response.ok) {
-			return { ok: true, message: null }
-		}
+        return { ok: true, message: null }
 	} catch (error) {
 		console.error("DELETE REQUEST ERROR:", error)
-		return { ok: false, message: error.message }
+		return { ok: false, message: error }
 	}
 }
