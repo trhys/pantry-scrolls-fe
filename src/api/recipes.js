@@ -11,6 +11,17 @@ export function useGetRecipeFeed() {
 	return { data, error, isLoading }
 }
 
+// Get explorer feed with query
+export function useExploreFeed(query) {
+  if (query != "") {
+    const { data, error, isLoading, mutate } = useSWR(`${API_BASE}/api/recipes/explore?search=${query}`, fetcher)
+    return { data, error, isLoading, mutate }
+  } else {
+    const { data, error, isLoading, mutate } = useSWR(`${API_BASE}/api/recipes`, fetcher)
+    return {data, error, isLoading, mutate }
+  }
+}
+
 // Get user's info for profile page
 export function useGetUserProfile(id) {
 	const { data, error, isLoading } = useSWR(`${API_BASE}/api/users/${id}`, authFetcher)

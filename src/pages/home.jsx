@@ -17,7 +17,7 @@ export default function Home() {
 		    {user ? (
 			<>
 			    <h2>Welcome back, {user.name}!</h2>
-			    <p>Create a new recipe or explore shared culinary ideas below.</p>
+			    <p>Create a new recipe or explore shared culinary ideas.</p>
 			    <div className="home-actions">
 				<Link to="/recipe-creator" className="home-btn primary-action">
 				    + Create Recipe
@@ -30,7 +30,7 @@ export default function Home() {
 		    ) : (
 			<>
 			    <h2>Welcome to The Recipe Repo</h2>
-			    <p>Log in to share your own recipes, or browse our shared community collection below.</p>
+			    <p>Log in to share your own recipes, or browse our shared community collection.</p>
 			    <div className="home-actions">
 				<Link to="/login" className="home-btn primary-action">
 				    Get Started
@@ -45,7 +45,6 @@ export default function Home() {
                 Add recipes to your global shopping lists for a convenient, beautifully formatted printout.
             </p>
 
-            <h1 className="explore-heading">Explore Recipes</h1>
             <RecipeFeed />
         </div>
     );

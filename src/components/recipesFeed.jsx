@@ -7,36 +7,64 @@ export default function RecipeFeed() {
 	const { data, error, isLoading } = useGetRecipeFeed()
 
 	if (isLoading) return (
-		<div className="recipe-feed">
-		    {[1, 2, 3].map(n => (
-		      <div key={n} className="skeleton-card">
-			<div className="skeleton skeleton-title"></div>
-			<div className="skeleton" style={{ height: '14px', width: '30%' }}></div>
-			<div className="skeleton skeleton-image"></div>
-		      </div>
-		    ))}
-		  </div>
-	)
+      <div className="recipe-feed-container">
+        <h2 className="feed-section-title">Trending Recipes</h2>
+        <div className="recipe-feed-grid">
+          {[1, 2, 3].map((n) => (
+            <div key={n} className="recipe-card skeleton-card">
+              <div className="skeleton skeleton-title"></div>
+              <div className="skeleton skeleton-meta"></div>
+              <div className="skeleton skeleton-image"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
 
 	if (error) return <p>Something went wrong!</p>
 
-	const feed = data.recipes.map(recipe =>
-			<Link to={`recipes/${recipe.id}`}>
-			<li key={recipe.id}>
-				<div class="content-card">
-				<h3>{recipe.title}</h3>
-				<p>By: {recipe.author} • {formatDate(recipe.created_at)}</p>
-				<img
-					src={recipe.image_url}
-					alt={recipe.title}
-				/>
-				</div>
-			</li></Link>
-		);
+  return (
+	<div className="recipe-feed-container">
+      <div className="feed-header-block">
+        <h2 className="feed-section-title">Trending Recipes</h2>
+        <span className="trending-badge">🔥 Community Hotlist</span>
+      </div>
+      
+      <hr className="feed-section-divider" />
 
-	return (
-		<div class="recipe-feed">
-		<ul style={{ listStyleType: 'none', padding: 0 }}>{feed}</ul>
-		</div>
-	);
+      <div className="recipe-feed-grid">
+        {data?.recipes?.map((recipe) => (
+          <Link key={recipe.id} to={`recipes/${recipe.id}`} className="feed-card-link">
+            <article className="recipe-card">
+              
+              <div className="feed-card-image-wrap">
+                <img
+                  src={recipe.image_url}
+                  alt={recipe.title}
+                  className="avatar-image-src"
+                />
+                <div className="feed-card-image-blur-layer"></div>
+              </div>
+
+              <div className="feed-card-details">
+                <h3 className="feed-recipe-title">{recipe.title}</h3>
+                
+                <div className="feed-recipe-meta">
+                  <span className="feed-author">By {recipe.author}</span>
+                  <span className="meta-bullet">•</span>
+                  <span className="feed-date">{formatDate(recipe.created_at)}</span>
+                </div>
+
+                <div className="feed-card-action">
+                  <span className="view-recipe-text">Read Recipe</span>
+                  <span className="arrow-indicator">→</span>
+                </div>
+              </div>
+
+            </article>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 }

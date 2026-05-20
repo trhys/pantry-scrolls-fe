@@ -24,6 +24,7 @@ export default function Navbar() {
 
 		<div className="nav-links">
 			<NavLink to="/" end>Home</NavLink>
+            <NavLink to="explore" end>Explore</NavLink>
 		{
 			user ? (
 				<>

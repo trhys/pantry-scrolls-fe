@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router'
-import { useAuth } from '../components/auth.jsx'
 
 const API_BASE = import.meta.env.VITE_API_URL
 
@@ -7,7 +6,7 @@ export const authFetcher = async (url, opts) => {
   try {
     let response = await fetch(url, {...opts, credentials: 'include'})
     if (response.status === 401) {
-      const ok = refreshSession()
+      const ok = await refreshSession()
       if (!ok) throw new Error("Session expired")
       response = await fetch(url, {...opts, credentials: 'include'})
     }
@@ -62,15 +61,10 @@ export async function postSignup(email, password, name) {
 
 // Refresh token
 async function refreshSession() {
-  const { logout } = useAuth()
-  const { navigate } = useNavigate()
   try {
-    const response = await fetch(`${API_BASE}/api/tokens`, { credentials: "include" })
+    const response = await fetch(`${API_BASE}/api/tokens/refresh`, { credentials: "include" })
     if (response.ok) return true
 
-    // Refresh failed. logout and clear user data
-    logout()
-    navigate("/login")
     return false
   } catch (error) {
     console.error("REFRESH FAILED:", error)

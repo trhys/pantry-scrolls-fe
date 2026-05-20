@@ -17,17 +17,22 @@ export default function Footer() {
                 <div className="footer-links">
                     <h4>Navigation</h4>
                     <Link to="/">Home</Link>
-	    	{user ? (
-			<>
-                    <Link to="/recipe-creator">Create Recipe</Link>
-                    <Link to="/shopping-lists">Shopping Lists</Link>
-			</>
-		) : (
-			<>
-			<Link to="/login">Log In</Link>
-			<Link to="/signup">Sign Up</Link>
-			</>
-		)}
+                    {user ? (
+                        <>
+                        <Link to="/recipe-creator">Create Recipe</Link>
+                        <Link to="/shopping-lists">Shopping Lists</Link>
+                        </>
+                    ) : (
+                        <>
+                        <Link to="/login">Log In</Link>
+                        <Link to="/signup">Sign Up</Link>
+                        </>
+                    )}
+                </div>
+                <div className="footer-links"> 
+                  <h4>About</h4>
+                  <Link to="/terms">Terms of Service</Link>
+                  <Link to="/privacy">Privacy Policy</Link>
                 </div>
             </div>
 

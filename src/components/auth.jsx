@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { authFetcher } from '../api/auth.js'
 
 const API_BASE = import.meta.env.VITE_API_URL
 
@@ -11,17 +12,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const savedUser = async () => {
 	    try {
-		    const response = await fetch(`${API_BASE}/api/sessions`, {
+		    const data = await authFetcher(`${API_BASE}/api/sessions`, {
 			    method: "GET",
-			    credentials: "include",
 		    })
 
-		    if (response.ok) {
-			    const data = await response.json()
-			    login(data)
-		    }
+            login(data)
 	    } catch (error) {
 		    console.log(error)
+            logout()
 	    } finally {
 		    setLoading(false)
 	    }
