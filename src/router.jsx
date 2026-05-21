@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import App from './App.jsx'
+import { NotFound404, ServerError500 } from './components/error.jsx'
 import Home from './pages/home.jsx'
 import Recipe from './pages/recipe.jsx'
 import Explorer from './pages/explore.jsx'
@@ -18,6 +19,8 @@ const router = createBrowserRouter([
 		Component: App,
 		children: [
 			{ index: true, Component: Home },
+			{ path: "404", Component: NotFound404 },
+			{ path: "500", Component: ServerError500 },
             { path: "admin", Component: Admin },
             { path: "terms", Component: Terms },
             { path: "privacy", Component: Privacy },
