@@ -1,0 +1,76 @@
+.error-realm-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.error-scroll-card {
+  width: 100%;
+  max-width: 580px;
+  padding: 40px;
+  text-align: center;
+}
+
+.error-rune {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 5rem;
+  font-weight: bold;
+  color: #78350f; 
+  margin: 0 0 12px 0;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.error-scroll-card h2 {
+  font-family: 'MedievalSharp', cursive;
+  color: #1c120c; 
+  font-size: 1.8rem;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.error-scroll-card p {
+  font-family: 'Metamorphous', serif;
+  color: #5c4331;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.error-divider {
+  border: 0;
+  border-top: 1px dashed rgba(92, 64, 51, 0.4);
+  margin-bottom: 24px;
+}
+
+.error-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+@media (min-width: 480px) {
+  .error-actions {
+    flex-direction: row;
+  }
+}
+
+.error-return-btn {
+  font-family: 'MedievalSharp', cursive;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.error-return-btn:active {
+  transform: scale(0.98);
+}
