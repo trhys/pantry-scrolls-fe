@@ -1,346 +1,152 @@
 .shopping-lists-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    color: white;
+  width: 100%;
 }
 
 .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--color-gold-accent);
+  font-size: 2rem;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .add-list-btn {
-    background: var(--trr-primary);
-    color: #1a1a1a;
-    border: none;
-    padding: 10px 20px;
-    margin-left: 15px;
-    border-radius: 50px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s;
+  font-family: 'MedievalSharp', cursive;
+  background-color: var(--color-gold-accent);
+  color: #2b1d11;
+  border: 1px solid #947132;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .add-list-btn:hover {
-    transform: scale(1.05);
-    background: var(--trr-deep);
-}
-
-.submit-btn {
-  width: 100%;
-  background: var(--trr-primary);
-  color: #1a1a1a;
-  border: none;
-  padding: 14px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.submit-btn:hover {
-        background: var(--trr-deep);
+  background-color: #d6b26b;
 }
 
 .lists-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .lists-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .lists-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .list-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  min-height: 100px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .list-card:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--trr-primary);
-    transform: translateX(5px);
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 0 35px rgba(92, 64, 51, 0.5),
+    0 14px 24px rgba(0, 0, 0, 0.5);
 }
 
 .list-info h3 {
-    margin: 0;
-    font-size: 1.2rem;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.4rem;
+  color: #1c120c; 
+  margin: 0 0 6px 0;
 }
 
 .list-info p {
-    margin: 4px 0 0 0;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.list-arrow {
-    font-size: 1.5rem;
-    color: var(--trr-primary);
-}
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6); 
-    backdrop-filter: blur(4px);    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9000;
-}
-
-.modal-content {
-    margin: 0;
-    width: 90%;
-    max-width: 400px;
-    animation: modalSlideUp 0.3s ease-out;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 1rem;
-}
-
-@keyframes modalSlideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+  font-family: 'Metamorphous', serif;
+  font-size: 0.8rem;
+  color: #5c4331;
+  margin: 0;
 }
 
 .list-actions-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .delete-list-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 8px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, transform 0.1s;
-    opacity: 0.5; 
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .list-card:hover .delete-list-btn {
-    opacity: 0.8;
+  opacity: 0.7;
 }
 
 .delete-list-btn:hover {
-    background-color: rgba(239, 68, 68, 0.2); 
-    opacity: 1;
-    transform: scale(1.05);
+  opacity: 1 !important;
+  transform: scale(1.15);
 }
 
-.delete-list-btn:active {
-    transform: scale(0.95);
+.list-arrow {
+  font-family: 'MedievalSharp', cursive;
+  color: #78350f;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.list-card:hover .list-arrow {
+  transform: translateX(4px);
+}
+
+.auth-form input[type="text"] {
+  width: 100%;
+  background-color: rgba(43, 29, 17, 0.5);
+  border: 1px solid var(--color-border-wood);
+  border-radius: 4px;
+  padding: 12px;
+  color: var(--color-parchment-text);
+  font-family: 'Metamorphous', serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.auth-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--color-gold-accent);
 }
 
 .danger-btn {
-    flex: 2;
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+  font-family: 'MedievalSharp', cursive;
+  background-color: #991b1b;
+  color: #ffffff;
+  border: 1px solid #7f1d1d;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .danger-btn:hover {
-    background: #dc2626; 
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  background-color: #b91c1c;
 }
-
-.danger-btn:active {
-    transform: scale(0.98);
-}
-
-.cancel-btn-secondary {
-    flex: 2;
-    background: var(--trr-primary);
-    color: #1a1a1a;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.cancel-btn-secondary:hover {
-        background: var(--trr-deep);
-}
-
-
-/* Single list page styles */
-
-.single-list-container {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    color: white;
-}
-
-.list-navigation {
-    margin-bottom: 2rem;
-}
-
-.back-link {
-    color: var(--trr-primary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.list-navigation h1 {
-    font-size: 2.5rem;
-    margin: 0.5rem 0 0 0;
-}
-
-.list-layout-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2.5rem;
-    align-items: start;
-}
-
-.checklist-section hr, 
-.linked-recipes-section hr {
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), transparent);
-    margin: 1rem 0;
-}
-
-.checklist-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.checklist-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.2s ease;
-}
-
-.checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.checkbox-wrapper input[type="checkbox"] {
-    display: none;
-}
-
-.custom-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 6px;
-    display: inline-block;
-    position: relative;
-    transition: all 0.2s ease;
-}
-
-.checkbox-wrapper input:checked + .custom-checkbox {
-    background: var(--trr-primary);
-    border-color: var(--trr-primary);
-}
-
-.checkbox-wrapper input:checked + .custom-checkbox::after {
-    content: "✓";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #1a1a1a;
-    font-size: 0.8rem;
-    font-weight: 900;
-}
-
-.item-completed {
-    opacity: 0.4;
-}
-
-.item-completed .item-name {
-    text-decoration: line-through;
-}
-
-.item-amount {
-    font-family: monospace;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
-    white-space: nowrap;
-}
-
-.recipe-links-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.mini-recipe-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-}
-
-.mini-recipe-card:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--trr-primary);
-}
-
-.mini-arrow {
-    color: var(--trr-primary);
-}
-
-@media (max-width: 800px) {
-    .list-layout-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
