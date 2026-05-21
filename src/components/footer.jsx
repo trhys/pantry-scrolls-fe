@@ -1,6 +1,5 @@
 import { Link } from 'react-router'
 import { useAuth } from './auth.jsx'
-import './footer.css'
 
 export default function Footer() {
     const { user } = useAuth()
@@ -8,43 +7,45 @@ export default function Footer() {
 
     return (
         <footer className="app-footer">
-            <div className="footer-content">
-                <div className="footer-brand">
-                    <span className="footer-logo">The Recipe Repo</span>
-                    <p>Organize your meals, consolidate grocery trips, and cook with ease.</p>
-                </div>
+      <div className="footer-content">
+        
+        <div className="footer-brand">
+          <span className="footer-logo">Pantry Scrolls</span>
+          <p>Chronicle your culinary formulas, consolidate seasonal provisions manifests, and feed your party with absolute ease.</p>
+        </div>
 
-                <div className="footer-links">
-                    <h4>Navigation</h4>
-                    <Link to="/">Home</Link>
-                    {user ? (
-                        <>
-                        <Link to="/recipe-creator">Create Recipe</Link>
-                        <Link to="/shopping-lists">Shopping Lists</Link>
-                        </>
-                    ) : (
-                        <>
-                        <Link to="/login">Log In</Link>
-                        <Link to="/signup">Sign Up</Link>
-                        </>
-                    )}
-                </div>
-                <div className="footer-links"> 
-                  <h4>About</h4>
-                  <Link to="/terms">Terms of Service</Link>
-                  <Link to="/privacy">Privacy Policy</Link>
-                </div>
-            </div>
+        <div className="footer-links">
+          <h4>Directories</h4>
+          <Link to="/">Hearth</Link>
+          {user ? (
+            <>
+              <Link to="/recipe-creator">Forge Scroll</Link>
+              <Link to="/shopping-lists">Provisions</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Enter Realm</Link>
+              <Link to="/signup">Enlist</Link>
+            </>
+          )}
+        </div>
 
-            <hr className="footer-divider" />
+        <div className="footer-links"> 
+          <h4>Edicts</h4>
+          <Link to="/terms">Terms of Service</Link>
+          <Link to="/privacy">Privacy Policy</Link>
+        </div>
+      </div>
 
-            <div className="footer-bottom">
-                <p>&copy {currentYear} The Recipe Repo. Built for passionate home chefs.</p>
-                <div className="footer-status">
-                    <span className="status-dot"></span> All Systems Operational
-                </div>
-            </div>
-        </footer>
-    );
+      <hr className="footer-divider" />
+
+      <div className="footer-bottom">
+        <p>&copy; {currentYear} Pantry Scrolls. Chronicled for passionate culinary artisans.</p>
+        <div className="footer-status">
+          <span className="status-dot"></span> Magic Wards Active
+        </div>
+      </div>
+    </footer>
+  );
 }
 
