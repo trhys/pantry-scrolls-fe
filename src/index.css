@@ -1,94 +1,110 @@
+/*FONTS & THEME VARIABLES*/
+@import url('https://googleapis.com');
+
 :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  --color-tavern-bg: #1a120b;
+  --color-parchment-text: #f2f5e8;
+  --color-gold-accent: #c5a059;
+  --color-border-wood: #5c4033;
+  --color-panel-bg: rgba(43, 29, 17, 0.4);
 }
 
+/*GLOBAL BASE STYLES*/
 body {
   margin: 0;
+  padding: 0;
+  background-color: var(--color-tavern-bg);
+  background-image: radial-gradient(circle, rgba(43,29,17,0.3) 0%, rgba(10,7,4,0.9) 100%);
+  color: var(--color-parchment-text);
+  font-family: 'Metamorphous', serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+::selection {
+  background-color: var(--color-gold-accent);
+  color: #2b1d11;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #110b07;
+}
+::-webkit-scrollbar-thumb {
+  background: #3d2818;
+  border: 2px solid #110b07;
+  border-radius: 4px;
+}
+
+/*STRUCTURAL LAYOUT UTILITIES*/
+.realm-layout {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  justify-content: space-between;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.realm-container {
+  flex-grow: 1;
+  max-w: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@media (min-width: 1024px) {
+  .realm-container {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+  .central-ledger {
+    grid-column: span 3 / span 3;
+  }
+  
+  .quest-sidebar {
+    grid-column: span 1 / span 1;
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+.central-ledger > * + * {
+  margin-top: 24px;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+/* SIDEBAR & INTERFACE COMPONENTS */
+.quest-panel {
+  border: 1px double var(--color-border-wood);
+  background-color: var(--color-panel-bg);
+  padding: 16px;
   border-radius: 4px;
-  color: var(--text-h);
+  backdrop-filter: blur(4px);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.quest-panel-title {
+  font-family: 'MedievalSharp', cursive;
+  color: var(--color-gold-accent);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(92, 64, 51, 0.5);
+  padding-bottom: 8px;
+}
+
+.quest-panel-hint {
+  font-size: 0.875rem;
+  color: rgba(242, 245, 232, 0.7);
+  font-style: italic;
+}
+
+.footer-keep {
+  width: 100%;
+  margin-top: auto;
+  border-top: 1px solid #3d2314;
+  background-color: #0a0704;
 }
