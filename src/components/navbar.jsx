@@ -2,7 +2,6 @@ import { Link, NavLink, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { useAuth } from './auth.jsx'
 import logo from '../assets/logo.png'
-import './navbar.css'
 
 export default function Navbar() {
 	const { user, logout } = useAuth(); 
