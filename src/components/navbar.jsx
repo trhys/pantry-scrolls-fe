@@ -16,48 +16,52 @@ export default function Navbar() {
 	}
 
 	return (
-		<nav className="navbar">
-		<Link to="/" className="logo-container">
-			<img src={logo} className="logo-img" />
-			<span className="logo-text">The Recipe Repo</span>
-		</Link>
+		<nav className="tavern-banner">
+      <Link to="/" className="realm-logo">
+        <img src={logo} className="logo-img w-8 h-8" alt="Pantry Scrolls Sigil" />
+        <span className="realm-logo-text">Pantry Scrolls</span>
+      </Link>
 
-		<div className="nav-links">
-			<NavLink to="/" end>Home</NavLink>
-            <NavLink to="explore" end>Explore</NavLink>
-		{
-			user ? (
-				<>
-				<NavLink to="recipe-creator" end>Create</NavLink>
-				<NavLink to="shopping-lists" end>Shopping Lists</NavLink>
+      <div className="tavern-links">
+        <NavLink to="/" end>Hearth</NavLink>
+        <NavLink to="explore" end>Explore Scrolls</NavLink>
+        
+        {user ? (
+          <>
+            <NavLink to="recipe-creator" end>Forge Scroll</NavLink>
+            <NavLink to="shopping-lists" end>Provisions</NavLink>
 
-				<div className="profile-dropdown">
-				<div className="user-profile" onClick={() => setIsOpen(!isOpen)}>
-					<span className="user-name">{user.name}</span>
-					<div className="user-avatar">
-				    		{user.image_url ? <img src={user.image_url}/> : user.name.charAt(0)}
-					</div>
-			    	</div>
-				{isOpen && (
-					<div className="dropdown-menu">
-					    <Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link>
-					    <Link to="/settings" onClick={() => setIsOpen(false)}>Settings</Link>
-					    <hr />
-					    <button onClick={handleLogout} className="dropdown-logout">
-						Logout
-					    </button>
-					</div>
-                            	)}
-                        	</div>
-				</>
-			) : (
-				<>
-				<NavLink to="login" end>Log In</NavLink>
-				<NavLink to="signup" end>Sign Up</NavLink>
-				</>
-			)
-		}
-		</div>
-		</nav>
-	)
+            <div className="adventurer-profile">
+              <div className="adventurer-badge" onClick={() => setIsOpen(!isOpen)}>
+                <span className="adventurer-name">{user.name}</span>
+                <div className="adventurer-sigil">
+                  {user.image_url ? (
+                    <img src={user.image_url} alt={`${user.name}'s Sigil`} />
+                  ) : (
+                    user.name.charAt(0).toUpperCase()
+                  )}
+                </div>
+              </div>
+              
+              {isOpen && (
+                <div className="tavern-dropdown" onMouseLeave={() => setIsOpen(false)}>
+                  <Link to="/profile" onClick={() => setIsOpen(false)}>Character Sheet</Link>
+                  <Link to="/settings" onClick={() => setIsOpen(false)}>Settings</Link>
+                  <hr />
+                  <button onClick={logout} className="dropdown-logout">
+                    Leave Tavern
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <NavLink to="login" end>Enter Realm</NavLink>
+            <NavLink to="signup" end>Enlist</NavLink>
+          </>
+        )}
+      </div>
+    </nav>
+  );
 }
