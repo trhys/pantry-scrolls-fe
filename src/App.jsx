@@ -1,29 +1,35 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router'
 import { useAuth } from './components/auth.jsx'
 import Navbar from './components/navbar.jsx'
 import Footer from './components/footer.jsx'
-import './App.css'
 
-function App() {
-	const { user, logout } = useAuth();
+export default function App() {
+  const { user, logout } = useAuth();
 
   return (
-    <>
-	<Navbar/>
+    <div className="realm-layout">
+      <Navbar user={user} logout={logout} />
 
-      	<section id="center">
-	<Outlet />
-	</section>
+      <main className="realm-container">
+        
+        <section id="center" className="central-ledger">
+          <Outlet />
+        </section>
 
-      <section id="next-steps">
+        <aside id="next-steps" className="quest-sidebar">
+          <div className="quest-panel">
+            <h3 className="quest-panel-title">📜 Active Quests</h3>
+            <p className="quest-panel-hint">
+              Select a scroll recipe from the ledger to begin preparing your grand feast.
+            </p>
+          </div>
+        </aside>
 
-	  </section>
-      <section id="spacer">
-		<Footer />
-	  </section>
-    </>
-  )
+      </main>
+
+      <footer id="spacer" className="footer-keep">
+        <Footer />
+      </footer>
+    </div>
+  );
 }
-
-export default App
