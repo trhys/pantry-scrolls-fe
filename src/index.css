@@ -1,6 +1,18 @@
 /*FONTS & THEME VARIABLES*/
 @import url('https://googleapis.com');
 
+*, *::before, *::after {
+  box-sizing: border-box; 
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; 
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --color-tavern-bg: #1a120b;
   --color-parchment-text: #f2f5e8;
@@ -135,6 +147,11 @@ body {
   font-size: 1.5rem;
   letter-spacing: 1px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.realm-logo img {
+  height: 80px;
+  width: 80px;
 }
 
 .tavern-links {
@@ -342,7 +359,7 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #10b981; /* Emerald ward light */
+  background-color: #10b981;
   box-shadow: 0 0 8px #10b981;
 }
 

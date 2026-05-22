@@ -1,7 +1,7 @@
 import { useRouteError, isRouteErrorResponse } from 'react-router'
 import { NotFound404, ServerError500 } from './components/error.jsx'
-import Navbar from './components/Navbar.jsx'
-import Footer from './components/Footer.jsx'
+import Navbar from './components/navbar.jsx'
+import Footer from './components/footer.jsx'
 
 export default function GlobalErrorBoundary() {
   const error = useRouteError()

@@ -14,9 +14,17 @@ export function Login() {
 
 	async function handleSubmit(e) {
 		e.preventDefault()
-		const data = await postLogin(email, pass)
-		login(data)
-		navigate('/')
+		try {
+          const { ok, data, message } = await postLogin(email, pass)
+          if (!ok) {
+            alert(message)
+            return
+          }
+          login(data)
+          navigate('/')
+        } catch(error) {
+          throw error
+        }
 	}
 
 	return (
@@ -60,13 +68,21 @@ export function Signup() {
 
 	async function handleSubmit(e) {
 		e.preventDefault()
-		if (pass !== confirmPass) {
-			alert("Passwords must match")
-			return
-		}
+        try {
+          if (pass !== confirmPass) {
+              alert("Passwords must match")
+              return
+          }
 
-		const data = await postSignup(email, pass, name)
-		navigate('login')
+          const { ok, data, message } = await postSignup(email, pass, name)
+          if (!ok) {
+            alert(message)
+            return
+          }
+          navigate('login')
+        } catch(error) {
+          throw(error)
+        }
 	}
 
 	return (
