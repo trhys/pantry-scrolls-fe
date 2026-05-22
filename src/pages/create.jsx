@@ -114,10 +114,20 @@ export function RecipeCreator() {
 
 	const handleSelectImage = (e) => {
 		const file = e.target.files[0]
-		if (file) {
-			setImage(file)
-			setPreview(URL.createObjectURL(file))
+		const allowedTypes = ['image/jpeg', 'image/png']
+
+		if (!file || !allowedTypes.includes(file.type)) {
+			if (preview) URL.revokeObjectURL(preview)
+			setImage(null)
+			setPreview(null)
+			e.target.value = ''
+			return
 		}
+
+		if (preview) URL.revokeObjectURL(preview)
+		const objectUrl = URL.createObjectURL(file)
+		setImage(file)
+		setPreview(objectUrl)
 	}
 
 	const addRow = (e) => {

@@ -19,12 +19,22 @@ export function UserProfile() {
 
     if (userLoading) return <p>Loading</p>
 
-	const handleImageUpload = async (e) => {
+	const handleSelectImage = (e) => {
 		const file = e.target.files[0]
-		if (!file) return
+		const allowedTypes = ['image/jpeg', 'image/png']
 
-		setPreview(URL.createObjectURL(file))
+		if (!file || !allowedTypes.includes(file.type)) {
+			if (preview) URL.revokeObjectURL(preview)
+			setImage(null)
+			setPreview(null)
+			e.target.value = ''
+			return
+		}
+
+		if (preview) URL.revokeObjectURL(preview)
+		const objectUrl = URL.createObjectURL(file)
 		setImage(file)
+		setPreview(objectUrl)
 	}
 
 	const handleSubmitImage = async (e) => {
@@ -78,7 +88,7 @@ export function UserProfile() {
 		<input 
 		    type="file" 
 		    className="hidden-file-input" 
-		    onChange={handleImageUpload} 
+		    onChange={handleSelectImage} 
 		    accept=".jpg, .jpeg, .png" 
 		/>
 	    </label>
