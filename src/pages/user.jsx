@@ -88,7 +88,7 @@ export function UserProfile() {
 		<input 
 		    type="file" 
 		    className="hidden-file-input" 
-		    onChange={handleImageUpload} 
+		    onChange={handleSelectImage} 
 		    accept=".jpg, .jpeg, .png" 
 		/>
 	    </label>
