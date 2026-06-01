@@ -11,21 +11,21 @@ export default function Footer() {
         
         <div className="footer-brand">
           <span className="footer-logo">Pantry Scrolls</span>
-          <p>Chronicle your culinary formulas, consolidate seasonal provisions manifests, and feed your party with absolute ease.</p>
+          <p>Scribe your house recipes, fill your provisions manifest, and feed your party with absolute ease.</p>
         </div>
 
         <div className="footer-links">
           <h4>Directories</h4>
-          <Link to="/">Hearth</Link>
+          <Link to="/">Home</Link>
           {user ? (
             <>
-              <Link to="/recipe-creator">Forge Scroll</Link>
+              <Link to="/recipe-creator">Scribe Recipe</Link>
               <Link to="/shopping-lists">Provisions</Link>
             </>
           ) : (
             <>
-              <Link to="/login">Enter Realm</Link>
-              <Link to="/signup">Enlist</Link>
+              <Link to="/login">Enter the Archive</Link>
+              <Link to="/signup">Register</Link>
             </>
           )}
         </div>

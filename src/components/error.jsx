@@ -5,7 +5,7 @@ export function NotFound404() {
   return (
     <div className="error-realm-container">
       <div className="error-scroll-card parchment-scroll">
-        <div className="error-rune">CDIV</div>
+        <div className="error-rune">404</div>
         
         <h2>Lost in the Wilderness</h2>
         <p>
@@ -34,7 +34,7 @@ export function ServerError500() {
   return (
     <div className="error-realm-container">
       <div className="error-scroll-card parchment-scroll">
-        <div className="error-rune">D</div> 
+        <div className="error-rune">500</div> 
         
         <h2>Arcane Alchemical Failure</h2>
         <p>

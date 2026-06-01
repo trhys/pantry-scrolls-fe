@@ -18,7 +18,7 @@ export function UserProfile() {
     if (!user) {
 	    return (
 	      <div className="text-center py-12">
-	        <p className="font-['MedievalSharp'] text-xl text-amber-500">You must log in to review your character sheet records.</p>
+	        <p className="font-['MedievalSharp'] text-xl text-amber-500">You must log in to review your profile.</p>
 	      </div>
 	    );
 	}
@@ -35,7 +35,7 @@ export function UserProfile() {
     );
   }
 
-  if (error) return <p className="text-center text-red-400 font-['MedievalSharp']">Failed to compile your character log logs.</p>;
+  if (error) return <p className="text-center text-red-400 font-['MedievalSharp']">Failed to retrieve profile.</p>;
 
 	const handleImageUpload = async (e) => {
 		const file = e.target.files[0]
@@ -82,12 +82,12 @@ export function UserProfile() {
     <>
       <div className="profile-container">
         <header className="profile-header">
-          <label className="profile-avatar-upload-label" title="Scribe a new profile illustration">
+          <label className="profile-avatar-upload-label" title="Scribe new avatar">
             <div className="profile-avatar-large">
               {preview ? (
-                <img src={preview} alt="Sigil Blueprint Preview" className="avatar-image-src" />
+                <img src={preview} alt="Avatar preview" className="avatar-image-src" />
               ) : user.image_url ? (
-                <img src={user.image_url} alt={`${user.name}'s Sigil`} className="avatar-image-src" />
+                <img src={user.image_url} alt={`${user.name}'s Avatar`} className="avatar-image-src" />
               ) : (
                 user.name.charAt(0).toUpperCase()
               )}
@@ -113,7 +113,7 @@ export function UserProfile() {
               onClick={handleSubmitImage}
               disabled={isSaving}
             >
-              {isSaving ? 'Sealing...' : 'Seal New Sigil'}
+              {isSaving ? 'Saving...' : 'Save new Avatar'}
             </button>
           )}
         </header>
@@ -121,22 +121,22 @@ export function UserProfile() {
         <div className="profile-stats-grid">
           <div className="stat-card">
             <span className="stat-number">{userData?.recipes?.length || 0}</span>
-            <span className="stat-label">Shared Blueprints</span>
+            <span className="stat-label">Shared Recipes</span>
           </div>
           <div className="stat-card">
             <span className="stat-number">{userData?.shopping_lists?.length || 0}</span>
-            <span className="stat-label">Active Manifests</span>
+            <span className="stat-label">Active Ledgers</span>
           </div>
         </div>
 
         <div className="profile-dashboard-layout">
           
           <section className="profile-section">
-            <h3>Your Chronicled Recipes</h3>
+            <h3>Your Recipes</h3>
             <hr />
             <div className="profile-recipes-list">
               {!userData?.recipes || userData.recipes.length === 0 ? (
-                <p className="empty-section-text">You haven't forged any recipe scrolls yet.</p>
+                <p className="empty-section-text">You haven't scribed any recipe scrolls yet.</p>
               ) : (
                 userData.recipes.map(recipe => (
                   <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="profile-recipe-item">
@@ -170,11 +170,11 @@ export function UserProfile() {
           </section>
 
           <section className="profile-section">
-            <h3>Recent Provisions Manifests</h3>
+            <h3>Recent Ledgers</h3>
             <hr />
             <div className="profile-lists-stack">
               {!userData?.shopping_lists || userData.shopping_lists.length === 0 ? (
-                <p className="empty-section-text">No active provisions ledgers found.</p>
+                <p className="empty-section-text">No active ledgers found.</p>
               ) : (
                 userData.shopping_lists.slice(0, 3).map(list => (
                   <Link to={`/shopping-lists/${list.id}`} key={list.id} className="profile-list-item">
@@ -191,8 +191,8 @@ export function UserProfile() {
       {deleteTarget && (
         <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}> 
-            <h3>Incinerate This Scroll Blueprint?</h3>
-            <p>This deployment action cannot be undone. The formula will be scrubbed from the royal tavern archive entirely.</p>
+            <h3>Incinerate This Scroll?</h3>
+            <p>This action cannot be undone.</p>
             
             <div className="modal-actions">
               <button 
@@ -200,7 +200,7 @@ export function UserProfile() {
                 className="cancel-btn-secondary" 
                 onClick={() => setDeleteTarget(null)}
               >
-                Keep Manuscript
+                Keep Scroll
               </button>
               <button 
                 type="button" 

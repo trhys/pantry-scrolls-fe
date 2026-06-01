@@ -16,7 +16,7 @@ export default function App() {
           <Outlet />
         </section>
 
-        <aside id="next-steps" className="quest-sidebar">
+        {/*<aside id="next-steps" className="quest-sidebar">
           <div className="quest-panel">
             <h3 className="quest-panel-title">📜 Active Quests</h3>
             <p className="quest-panel-hint">
@@ -24,6 +24,7 @@ export default function App() {
             </p>
           </div>
         </aside>
+        */}
 
       </main>
 

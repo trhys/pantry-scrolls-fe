@@ -22,13 +22,13 @@ export default function Navbar() {
       </Link>
 
       <div className="tavern-links">
-        <NavLink to="/" end>Hearth</NavLink>
-        <NavLink to="explore" end>Explore Scrolls</NavLink>
+        <NavLink to="/" end>Home</NavLink>
+        <NavLink to="explore" end>Explore</NavLink>
         
         {user ? (
           <>
-            <NavLink to="recipe-creator" end>Forge Scroll</NavLink>
-            <NavLink to="shopping-lists" end>Provisions</NavLink>
+            <NavLink to="recipe-creator" end>Scribe Recipe</NavLink>
+            <NavLink to="shopping-lists" end>Shopping Lists</NavLink>
 
             <div className="adventurer-profile">
               <div className="adventurer-badge" onClick={() => setIsOpen(!isOpen)}>
@@ -44,11 +44,11 @@ export default function Navbar() {
               
               {isOpen && (
                 <div className="tavern-dropdown" onMouseLeave={() => setIsOpen(false)}>
-                  <Link to="/profile" onClick={() => setIsOpen(false)}>Character Sheet</Link>
+                  <Link to="/profile" onClick={() => setIsOpen(false)}>Profile</Link>
                   <Link to="/settings" onClick={() => setIsOpen(false)}>Settings</Link>
                   <hr />
                   <button onClick={logout} className="dropdown-logout">
-                    Leave Tavern
+                    Logout
                   </button>
                 </div>
               )}
@@ -56,8 +56,8 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <NavLink to="login" end>Enter Realm</NavLink>
-            <NavLink to="signup" end>Enlist</NavLink>
+            <NavLink to="login" end>Enter Archive</NavLink>
+            <NavLink to="signup" end>Register</NavLink>
           </>
         )}
       </div>

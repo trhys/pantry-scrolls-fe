@@ -80,7 +80,7 @@ export default function Recipe() {
 
         <div className="recipe-text-block">{data.description}</div>
 
-        <h3>Required Reagents</h3>
+        <h3>Ingredients</h3>
         <hr />
         <ul className="ingredients-section">
           {data.ingredients?.map(ing => (
@@ -91,7 +91,7 @@ export default function Recipe() {
           ))}
         </ul>
 
-        <h3>Preparation Directives</h3>
+        <h3>Instructions</h3>
         <hr />
         <div className="recipe-text-block">{data.instructions}</div>
       </div>
@@ -102,7 +102,7 @@ export default function Recipe() {
             {user ? (
               <>
                 <h3>Assign to Provisions Manifest</h3>
-                <p>Scale the formulation batch quantity and choose your active quest checklist ledger.</p>
+                <p>Scale the batch quantity and choose a list to add this recipe to.</p>
 
                 <form onSubmit={handleAddToList} className="modal-add-form">
                   <div className="form-group">
@@ -153,21 +153,21 @@ export default function Recipe() {
             ) : (
               <>
                 <h3>Authentication Required</h3>
-                <p>You must step inside the tavern archive to append items to a manifest grid.</p>
+                <p>You must log in to use this function.</p>
                 <div className="modal-actions flex-col gap-2 w-full">
                   <button
                     type="button"
                     className="submit-btn w-full"
                     onClick={() => navigate("/login")}
                   >
-                    Enter Tavern (Log In)
+                    Enter the Archive
                   </button>
                   <button
                     type="button"
                     className="cancel-btn-secondary w-full"
                     onClick={() => navigate("/signup")}
                   >
-                    Enlist Guild (Sign Up)
+                    Register
                   </button>
                 </div>
               </>

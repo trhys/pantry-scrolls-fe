@@ -30,29 +30,29 @@ export function Login() {
 	return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Enter the Keep</h2>
-        <p>Ready to unroll ancient scrolls and chronicle your culinary quests?</p>
+        <h2>Enter the Archive</h2>
+        <p>Ready to make your planning painless, and chronicle culinary greatness?</p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Guild Identifier (Email)"
+            placeholder="Email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
-            placeholder="Secret Passphrase (Password)"
+            placeholder="Password"
             value={pass}
             onChange={e => setPass(e.target.value)}
             required
           />
-          <button className="submit-btn" type="submit">Pass Gatekeeper</button>
+          <button className="submit-btn" type="submit">Enter</button>
         </form>
 
         <div className="auth-footer">
-          New to the realm? <Link to="/signup">Enlist in Guild</Link>
+          Don't have an account? <Link to="/signup">Register</Link>
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@ export function Signup() {
             alert(message)
             return
           }
-          navigate('login')
+          navigate('/login')
         } catch(error) {
           throw(error)
         }
@@ -88,27 +88,30 @@ export function Signup() {
 	return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Enlist in the Guild</h2>
-        <p>Scribe your magical lineage details below to unlock your master ledger archive bundle.</p>
+        <h2>Register with the Guild</h2>
+        <p>Scribe your details here and register with the Pantry Scrolls guild.</p>
         
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Guild Identifier (Email)"
+            placeholder="Email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
-            placeholder="Secret Passphrase (Password)"
+            placeholder="Password"
             value={pass}
             onChange={e => setPass(e.target.value)}
             required
           />
+          {pass.length < 5 && pass.length > 0 && (
+            <span className="error-text">Password must be longer than 5 characters</span>
+          )}
           <input
             type="password"
-            placeholder="Confirm Passphrase"
+            placeholder="Confirm Password"
             value={confirmPass}
             onChange={e => setConfirmPass(e.target.value)}
             className={pass !== confirmPass && confirmPass.length > 0 ? "error" : ""}
@@ -119,16 +122,16 @@ export function Signup() {
           )}
           <input
             type="text"
-            placeholder="Adventurer Name (Username)"
+            placeholder="Username"
             value={name}
             onChange={e => setName(e.target.value)}
             required
           />
-          <button className="submit-btn" type="submit">Scribe Registry</button>
+          <button className="submit-btn" type="submit">Register</button>
         </form>
         
         <div className="auth-footer">
-          Already a guildmate? <Link to="/login">Enter the Keep</Link>
+          Already registered? <Link to="/login">Enter the Archive</Link>
         </div>
       </div>
     </div>

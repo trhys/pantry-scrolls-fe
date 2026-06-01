@@ -20,7 +20,7 @@ export default function GlobalErrorBoundary() {
     <div className="realm-layout">
       <Navbar />
       <main className="realm-container flex items-center justify-center">
-        <div className="w-full max-w-2xl">
+        <div className="central-ledger">
           {errorComponent}
         </div>
       </main>

@@ -79,7 +79,7 @@ export function RecipeCreator() {
 	if (editorLoading || ingredientIsLoading) {
 	    return (
 	      <div className="creator-workspace parchment-scroll animate-pulse flex items-center justify-center min-h-[400px]">
-	        <p className="font-['MedievalSharp'] text-xl text-[#5c4331]">Preparing inkwells and parchment records...</p>
+	        <p className="font-['MedievalSharp'] text-xl text-[#5c4331]">Preparing inkwells...</p>
 	      </div>
 	    );
 	}
@@ -143,7 +143,7 @@ export function RecipeCreator() {
         className="recipe-title-input"
         type="text"
         value={title}
-        placeholder="Name your culinary formulation..."
+        placeholder="Name your recipe..."
         onChange={e => setTitle(e.target.value)}
         required
       />
@@ -153,7 +153,7 @@ export function RecipeCreator() {
           {preview ? (
             <div className="preview-container">
               <img src={preview} alt="Formulation Preview" className="image-preview" />
-              <div className="change-image-overlay">Replace Blueprint Illustration</div>
+              <div className="change-image-overlay">Replace Illustration</div>
             </div>
           ) : (
             <>
@@ -171,7 +171,7 @@ export function RecipeCreator() {
       </div>
 
       <div className="ingredient-forge-section">
-        <label>Required Reagents</label>
+        <label>Ingredients</label>
         <hr />
         
         <div className="ingredients-stack">
@@ -182,7 +182,7 @@ export function RecipeCreator() {
                 onChange={e => handleSelectIngredient(row.rowID, e.target.value)}
                 disabled={ingredientIsLoading}
               >
-                <option value="">{ingredientIsLoading ? 'Loading reagents...' : 'Select a reagent...'}</option>
+                <option value="">{ingredientIsLoading ? 'Loading ingredients...' : 'Select an ingredient...'}</option>
                 {ingredientData?.ingredients.map((opt) => (
                   <option key={opt.id} value={opt.id}>
                     {opt.name}
@@ -212,27 +212,27 @@ export function RecipeCreator() {
         </div>
 
         <button className="add-btn-secondary" type="button" onClick={addRow}>
-          ＋ Manifest Another Reagent
+          ＋ Add
         </button>
         <hr />
       </div>
 
-      <label className="form-label-block">Chronicle Summary</label>
+      <label className="form-label-block">Description</label>
       <textarea 
         placeholder="Provide historical context or flavor profiles for this feast..." 
         value={description} 
         onChange={e => setDescription(e.target.value)} 
       />
       
-      <label className="form-label-block">Preparation Directives</label>
+      <label className="form-label-block">Instructions</label>
       <textarea 
-        placeholder="Step-by-step incantations required to combine reagents successfully..." 
+        placeholder="Step-by-step instructions to combine ingredients successfully..." 
         value={instructions} 
         onChange={e => setInstructions(e.target.value)} 
       />
 
       <button type="submit" className="forge-submit-btn">
-        {editor ? '⚔️ Amend Manuscript' : '📜 Forge Blueprint Scroll'}
+        {editor ? '⚔️ Amend' : '📜 Scribe'}
       </button>
 
     </form>

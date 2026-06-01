@@ -182,6 +182,10 @@
   flex-grow: 1;
 }
 
+.feed-card-details h3 {
+  color: var(--color-gold-accent);
+}
+
 .feed-recipe-title {
   font-family: 'MedievalSharp', cursive;
   font-size: 1.3rem;

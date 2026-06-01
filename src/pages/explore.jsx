@@ -36,12 +36,10 @@ export default function Explore() {
         </div>
       </header>
 
-      {/* 2. INFINITE SCROLL / FEED CONTAINER */}
       <main className="explore-content-grid">
         {data?.recipes?.map((recipe) => (
           <article key={recipe.id} className="recipe-explore-card">
             
-            {/* Visual Media Block */}
             <div className="recipe-card-media">
               <img src={recipe.image_url} alt={recipe.title} className="avatar-image-src" />
               <div className="recipe-card-overlay">
@@ -49,7 +47,6 @@ export default function Explore() {
               </div>
             </div>
 
-            {/* Context Detail Block */}
             <div className="recipe-card-body">
               <span className="recipe-author">By @{recipe.author}</span>
               <h4 className="recipe-card-title">{recipe.title}</h4>

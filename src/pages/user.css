@@ -237,3 +237,7 @@
   color: #ef4444;
   border-color: #991b1b;
 }
+
+.list-actions-wrapper {
+  align-content: right;
+}

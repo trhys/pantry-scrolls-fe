@@ -144,7 +144,7 @@
 .recipe-card-title {
   font-family: 'MedievalSharp', cursive;
   font-size: 1.3rem;
-  color: #1c120c; 
+  color: var(--color-gold-accent); 
   margin: 0 0 16px 0;
   line-height: 1.3;
 }
