@@ -74,7 +74,7 @@ export default function Recipe() {
             className="open-add-modal-btn"
             onClick={() => setShowAddModal(true)}
           >
-            ＋ Assign to Provisions
+            ＋ Add to Shopping List
           </button>
         </div>
 
@@ -101,19 +101,19 @@ export default function Recipe() {
           <div className="modal-content" onClick={e => e.stopPropagation()}> 
             {user ? (
               <>
-                <h3>Assign to Provisions Manifest</h3>
+                <h3>Assign to Shopping List</h3>
                 <p>Scale the batch quantity and choose a list to add this recipe to.</p>
 
                 <form onSubmit={handleAddToList} className="modal-add-form">
                   <div className="form-group">
-                    <label>Provisions Ledger</label>
+                    <label>Shopping List</label>
                     <select 
                       value={selectedList} 
                       onChange={(e) => setSelectedList(e.target.value)}
                       disabled={isAdding}
                       required
                     >
-                      <option value="">Select a manifest...</option>
+                      <option value="">Select...</option>
                       {listData?.shopping_lists?.map(list => (
                         <option key={list.id} value={list.id}>{list.name}</option>
                       ))}
@@ -121,7 +121,7 @@ export default function Recipe() {
                   </div>
 
                   <div className="form-group">
-                    <label>Batch Multiplier (Quantity)</label>
+                    <label>Batch Multiplier</label>
                     <input
                       type="number"
                       min="1"
