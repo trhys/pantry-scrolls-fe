@@ -5,7 +5,7 @@ export default function PrivacyPolicy() {
     <div className="edict-container">
       <header className="edict-header">
         <h1>Imperial Decree of Privacy</h1>
-        <p>How we safeguard your adventurer metrics, sigils, and vault variables</p>
+        <p>How we safeguard your character sheet and inventory</p>
       </header>
 
       <div className="edict-scroll-frame parchment-scroll">
