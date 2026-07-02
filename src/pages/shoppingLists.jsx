@@ -21,7 +21,7 @@ export function ShoppingListsPage() {
     return (
       <div className="shopping-lists-container">
         <header className="page-header">
-          <h2>Your Provisions Manifests</h2>
+          <h2>Your Shopping Lists</h2>
         </header>
         <div className="lists-grid">
           {[1, 2, 3].map(n => (
@@ -69,7 +69,7 @@ export function ShoppingListsPage() {
     <>
       <div className="shopping-lists-container">
         <header className="page-header">
-          <h2>Provisions Manifests</h2>
+          <h2>Shopping Lists</h2>
           <button className="add-list-btn" onClick={() => setCreateModal(true)}>
             📜 Scribe New List
           </button>
@@ -102,8 +102,8 @@ export function ShoppingListsPage() {
       {createModal && (
         <div className="modal-overlay" onClick={() => setCreateModal(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}> 
-            <h3>Scribe New Manifest</h3>
-            <p>Give a title to this provisions ledger before cataloging reagents.</p>
+            <h3>Scribe New List</h3>
+            <p>Give a title to this shopping list before adding recipes.</p>
             
             <form onSubmit={handleCreateList} className="auth-form">
               <input 
@@ -119,7 +119,7 @@ export function ShoppingListsPage() {
                   Dismiss
                 </button>
                 <button type="submit" className="submit-btn">
-                  Scribe Ledger
+                  Scribe
                 </button>
               </div>
             </form>
@@ -130,8 +130,8 @@ export function ShoppingListsPage() {
       {deleteTarget && (
         <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}> 
-            <h3>Incinerate This Ledger?</h3>
-            <p>This deployment action cannot be undone. All cataloged ingredients wrapped in this manifest scroll will turn to ash.</p>
+            <h3>Incinerate This List?</h3>
+            <p>This action cannot be undone. This scroll will turn to ash.</p>
             
             <div className="modal-actions">
               <button 
@@ -139,7 +139,7 @@ export function ShoppingListsPage() {
                 className="cancel-btn-secondary" 
                 onClick={() => setDeleteTarget(null)}
               >
-                Keep Ledger
+                Cancel
               </button>
               <button 
                 type="button" 
@@ -191,7 +191,7 @@ export function ShoppingList() {
       <div className="list-layout-grid">
         
         <main className="checklist-section parchment-scroll">
-          <h3>Reagents & Provisions Checklist</h3>
+          <h3>Checklist</h3>
           <hr />
           
           <ul className="checklist-items">
@@ -215,7 +215,7 @@ export function ShoppingList() {
         </main>
 
         <aside className="linked-recipes-section">
-          <h3>Formulation Blueprints</h3>
+          <h3>Recipes</h3>
           <hr />
           
           <div className="recipe-links-stack">
