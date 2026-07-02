@@ -1,6 +1,5 @@
 import { Link } from 'react-router'
 import { useGetRecipeFeed } from '../api/recipes.js'
-import './recipesFeed.css'
 import formatDate from '../utility/format.js'
 
 export default function RecipeFeed() {

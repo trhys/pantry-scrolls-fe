@@ -15,9 +15,27 @@ export function UserProfile() {
     const [isSaving, setIsSaving] = useState(false)
     const [deleteTarget, setDeleteTarget] = useState(null)
 
-    if (!user) return <p className="status-text">Please log in to view your profile.</p>
+    if (!user) {
+	    return (
+	      <div className="text-center py-12">
+	        <p className="font-['MedievalSharp'] text-xl text-amber-500">You must log in to review your profile.</p>
+	      </div>
+	    );
+	}
 
-    if (userLoading) return <p>Loading</p>
+  if (userLoading) {
+    return (
+      <div className="profile-container animate-pulse">
+        <div className="profile-header" style={{ height: '140px', background: 'rgba(43,29,17,0.2)' }} />
+        <div className="profile-stats-grid">
+          <div className="stat-card" style={{ height: '80px' }} />
+          <div className="stat-card" style={{ height: '80px' }} />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) return <p className="text-center text-red-400 font-['MedievalSharp']">Failed to retrieve profile.</p>;
 
 	const handleSelectImage = (e) => {
 		const file = e.target.files[0]
@@ -185,35 +203,127 @@ export function UserProfile() {
                     )}
                 </section>
             </div>
-	</div>
-	    {deleteTarget && (
-                    <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
-                        <div className="modal-content auth-card" onClick={e => e.stopPropagation()}> 
-                            <h3>Delete this recipe?</h3>
-                            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem 0' }}>
-                                This action cannot be undone.
-                            </p>
-                            
-                            <div className="modal-actions">
-                                <button 
-                                    type="button" 
-                                    className="cancel-btn-secondary" 
-                                    onClick={() => setDeleteTarget(null)}
-                                >
-                                    Cancel
-                                </button>
-                                <button 
-                                    type="button" 
-                                    className="danger-btn" 
-                                    onClick={handleDelete}
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
+            <input 
+              type="file" 
+              className="hidden-file-input" 
+              onChange={handleImageUpload} 
+              accept=".jpg, .jpeg, .png" 
+            />
+          </label>
+
+          <div className="flex-grow">
+            <h2>{user.name}</h2>
+            <p className="profile-email">{user.email || 'artisan@pantryscrolls.com'}</p>
+          </div>
+
+          {image && (
+            <button 
+              type="button" 
+              className="save-profile-btn" 
+              onClick={handleSubmitImage}
+              disabled={isSaving}
+            >
+              {isSaving ? 'Saving...' : 'Save new Avatar'}
+            </button>
+          )}
+        </header>
+
+        <div className="profile-stats-grid">
+          <div className="stat-card">
+            <span className="stat-number">{userData?.recipes?.length || 0}</span>
+            <span className="stat-label">Shared Recipes</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-number">{userData?.shopping_lists?.length || 0}</span>
+            <span className="stat-label">Active Ledgers</span>
+          </div>
+        </div>
+
+        <div className="profile-dashboard-layout">
+          
+          <section className="profile-section">
+            <h3>Your Recipes</h3>
+            <hr />
+            <div className="profile-recipes-list">
+              {!userData?.recipes || userData.recipes.length === 0 ? (
+                <p className="empty-section-text">You haven't scribed any recipe scrolls yet.</p>
+              ) : (
+                userData.recipes.map(recipe => (
+                  <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="profile-recipe-item">
+                    <img src={recipe.image_url} alt={recipe.title} />
+                    <div className="profile-recipe-details flex-grow">
+                      <h4>{recipe.title}</h4>
                     </div>
-                )}
-        </>
-    );
+                    
+                    <div className="list-actions-wrapper" onClick={(e) => e.stopPropagation()}>
+                      <div className="recipe-list-btns">
+                        <Link to={`/recipes/${recipe.id}/edit`} className="edit-recipe-link">
+                          <button type="button" className="edit-recipe-btn" title="Amend Scroll">
+                            ✎
+                          </button>
+                        </Link>
+                        <button 
+                          type="button" 
+                          className="delete-recipe-btn"
+                          onClick={(e) => triggerDelete(e, recipe.id)}
+                          title="Incinerate Scroll"
+                        >
+                          🔥
+                        </button>
+                      </div>
+                      <div className="list-arrow">🗡️</div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
+          </section>
+
+          <section className="profile-section">
+            <h3>Recent Ledgers</h3>
+            <hr />
+            <div className="profile-lists-stack">
+              {!userData?.shopping_lists || userData.shopping_lists.length === 0 ? (
+                <p className="empty-section-text">No active ledgers found.</p>
+              ) : (
+                userData.shopping_lists.slice(0, 3).map(list => (
+                  <Link to={`/shopping-lists/${list.id}`} key={list.id} className="profile-list-item">
+                    <span>📜 {list.name}</span>
+                    <span className="list-arrow">🗡️</span>
+                  </Link>
+                ))
+              )}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {deleteTarget && (
+        <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}> 
+            <h3>Incinerate This Scroll?</h3>
+            <p>This action cannot be undone.</p>
+            
+            <div className="modal-actions">
+              <button 
+                type="button" 
+                className="cancel-btn-secondary" 
+                onClick={() => setDeleteTarget(null)}
+              >
+                Keep Scroll
+              </button>
+              <button 
+                type="button" 
+                className="danger-btn" 
+                onClick={handleDelete}
+              >
+                Burn Scroll
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 

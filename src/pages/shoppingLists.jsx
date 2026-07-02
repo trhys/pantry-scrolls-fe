@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useParams, Link } from 'react-router'
 import { useAuth } from '../components/auth.jsx'
 import { useGetShoppingLists, useGetSingleList, postCreateList, deleteList, useGetListItems } from '../api/shoppingLists.js'
-import './shoppingLists.css'
 import formatDate from '../utility/format.js'
+import './shoppingLists.css'
 
 export function ShoppingListsPage() {
-	const { user, logout } = useAuth();
+	const { user } = useAuth();
 
 	/* create state */
 	const [createModal, setCreateModal] = useState(false)
@@ -17,11 +17,25 @@ export function ShoppingListsPage() {
 
 	const { data, error, isLoading, mutate } = useGetShoppingLists(user)
 
-	if (isLoading) return <p>Loading</p>
-	if (error) {
-		console.log(error)
-		alert(`Something went wrong: ${error}`)
-	}
+	if (isLoading) {
+    return (
+      <div className="shopping-lists-container">
+        <header className="page-header">
+          <h2>Your Shopping Lists</h2>
+        </header>
+        <div className="lists-grid">
+          {[1, 2, 3].map(n => (
+            <div key={n} className="parchment-scroll list-card animate-pulse" style={{ height: '100px', opacity: 0.5 }} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error(error);
+    return <p className="text-center text-red-400 font-['MedievalSharp']">Failed to read the provisions logs from archives.</p>;
+  }
 
 	const handleCreateList = async (e) => {
 		e.preventDefault()
@@ -52,148 +66,169 @@ export function ShoppingListsPage() {
 	}
 
 	return (
-		<>
-		<div className="shopping-lists-container">
-		    <header className="page-header">
-			<h2>Your Shopping Lists</h2>
-			<button className="add-list-btn" onClick={() => setCreateModal(true)}>
-			    + New List
-			</button>
-		    </header>
+    <>
+      <div className="shopping-lists-container">
+        <header className="page-header">
+          <h2>Shopping Lists</h2>
+          <button className="add-list-btn" onClick={() => setCreateModal(true)}>
+            📜 Scribe New List
+          </button>
+        </header>
 
-		    <div className="lists-grid">
-			{data?.shopping_lists.map(list => (
-			    <Link to={`/shopping-lists/${list.id}`} key={list.id} className="list-card">
-				<div className="list-info">
-				    <h3>{list.name}</h3>
-				    <p>Last updated {formatDate(list.updated_at)}</p>
-				</div>
+        <div className="lists-grid">
+          {data?.shopping_lists?.map(list => (
+            <Link to={`/shopping-lists/${list.id}`} key={list.id} className="list-card parchment-scroll">
+              <div className="list-info">
+                <h3>{list.name}</h3>
+                <p>Last amended {formatDate(list.updated_at)}</p>
+              </div>
 
-				<div className="list-actions-wrapper">
-				<button 
-				    type="button" 
-				    className="delete-list-btn"
-				    onClick={(e) => triggerDelete(e, list.id)}
-				    title="Delete List"
-				>
-				    🗑️
-				</button>
-				<div className="list-arrow">→</div>
-			    </div>
-			    </Link>
-			))}
-		    </div>
-		</div>
+              <div className="list-actions-wrapper">
+                <button 
+                  type="button" 
+                  className="delete-list-btn"
+                  onClick={(e) => triggerDelete(e, list.id)}
+                  title="Incinerate Ledger"
+                >
+                  🔥
+                </button>
+                <div className="list-arrow">🗡️</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
 	
-		{createModal && (
-			<div className="modal-overlay">
-			    <div className="modal-content auth-card"> 
-				<h3>Name your list</h3>
-				<form onSubmit={handleCreateList} className="auth-form">
-				    <input 
-					autoFocus
-					type="text" 
-					placeholder="Title" 
-					value={newName}
-					onChange={(e) => setNewName(e.target.value)}
-					required 
-				    />
-				    <div className="modal-actions">
-					<button type="button" className="cancel-btn-secondary" onClick={() => setCreateModal(false)}>
-					    Cancel
-					</button>
-					<button type="submit" className="submit-btn">
-					    Create
-					</button>
-				    </div>
-				</form>
-			    </div>
-			</div>
-		)}
+      {createModal && (
+        <div className="modal-overlay" onClick={() => setCreateModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}> 
+            <h3>Scribe New List</h3>
+            <p>Give a title to this shopping list before adding recipes.</p>
+            
+            <form onSubmit={handleCreateList} className="auth-form">
+              <input 
+                autoFocus
+                type="text" 
+                placeholder="E.g., Grand Feast Supplies" 
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                required 
+              />
+              <div className="modal-actions">
+                <button type="button" className="cancel-btn-secondary" onClick={() => setCreateModal(false)}>
+                  Dismiss
+                </button>
+                <button type="submit" className="submit-btn">
+                  Scribe
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
-		{deleteTarget && (
-		    <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
-			<div className="modal-content auth-card" onClick={e => e.stopPropagation()}> 
-			    <h3>Delete this list?</h3>
-			    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem 0' }}>
-				This action cannot be undone. All saved items within this list will be lost.
-			    </p>
-			    
-			    <div className="modal-actions">
-				<button 
-				    type="button" 
-				    className="cancel-btn-secondary" 
-				    onClick={() => setDeleteTarget(null)}
-				>
-				    Cancel
-				</button>
-				<button 
-				    type="button" 
-				    className="danger-btn" 
-				    onClick={handleDeleteList}
-				>
-				    Delete
-				</button>
-			    </div>
-			</div>
-		    </div>
-		)}
-		</>
-	    );
+      {deleteTarget && (
+        <div className="modal-overlay" onClick={() => setDeleteTarget(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}> 
+            <h3>Incinerate This List?</h3>
+            <p>This action cannot be undone. This scroll will turn to ash.</p>
+            
+            <div className="modal-actions">
+              <button 
+                type="button" 
+                className="cancel-btn-secondary" 
+                onClick={() => setDeleteTarget(null)}
+              >
+                Cancel
+              </button>
+              <button 
+                type="button" 
+                className="danger-btn" 
+                onClick={handleDeleteList}
+              >
+                Burn Scroll
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
 
 export function ShoppingList() {
 	let params = useParams()
-	const { user, logout } = useAuth()
+	const { user } = useAuth()
 
 	const { data: listData, error, isLoading } = useGetSingleList(params.id)
 	const { data: ingredients } = useGetListItems(params.id)
 
-	if (isLoading) return <p>Loading</p>
-	if (error) alert(error)
+	/* todo: implement toggle */
+	const handleToggleCheck = (itemId) => {
+	    console.log(`Item strike action triggered on item layout: ${itemId}`);
+	};
 
-	return (
-		<div className="single-list-container">
-		    <div className="list-navigation">
-			<Link to="/shopping-lists" className="back-link">← Back to Lists</Link>
-			<h1>{listData?.name}</h1>
-		    </div>
+  if (isLoading) {
+    return (
+      <div className="single-list-container animate-pulse">
+        <div className="skeleton" style={{ height: '32px', width: '40%', marginBottom: '24px', background: 'rgba(92, 64, 51, 0.2)' }} />
+        <div className="checklist-section parchment-scroll" style={{ height: '300px' }} />
+      </div>
+    );
+  }
 
-		    <div className="list-layout-grid">
-			<main className="checklist-section">
-			    <h3>Ingredients Checklist</h3>
-			    <hr />
-			    <ul className="checklist-items">
-				{ingredients?.items?.map(item => (
-				    <li key={item.id} className={`checklist-item ${item.checked ? 'item-completed' : ''}`}>
-					<label className="checkbox-wrapper">
-					    <input 
-						type="checkbox" 
-						checked={item.checked} 
-						onChange={() => handleToggleCheck(item.id)}
-					    />
-					    <span className="custom-checkbox"></span>
-					    <span className="item-name">{item.name}</span>
-					</label>
-					<span className="item-amount">{item.quantity} {item.unit}</span>
-				    </li>
-				))}
-			    </ul>
-			</main>
+  if (error) {
+    alert(`The ledger data could not be compiled: ${error}`);
+  }
 
-			<aside className="linked-recipes-section">
-			    <h3>Included Recipes</h3>
-			    <hr />
-			    <div className="recipe-links-stack">
-				{listData.recipes.map(recipe => (
-				    <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="mini-recipe-card">
-					<span>{recipe.quantity}x {recipe.title}</span>
-					<span className="mini-arrow">→</span>
-				    </Link>
-				))}
-			    </div>
-			</aside>
-		    </div>
-		</div>
-	    );
+  return (
+    <div className="single-list-container">
+      <div className="list-navigation">
+        <Link to="/shopping-lists" className="back-link">🗡️ Return to Archives</Link>
+        <h1>{listData?.name}</h1>
+      </div>
+
+      <div className="list-layout-grid">
+        
+        <main className="checklist-section parchment-scroll">
+          <h3>Checklist</h3>
+          <hr />
+          
+          <ul className="checklist-items">
+            {ingredients?.items?.map(item => (
+              <li key={item.id} className={`checklist-item ${item.checked ? 'item-completed' : ''}`}>
+                
+                <label className="checkbox-wrapper">
+                  <input 
+                    type="checkbox" 
+                    checked={item.checked} 
+                    onChange={() => handleToggleCheck(item.id)}
+                  />
+                  <span className="custom-checkbox"></span>
+                  <span className="item-name">{item.name}</span>
+                </label>
+                
+                <span className="item-amount">{item.quantity} {item.unit}</span>
+              </li>
+            ))}
+          </ul>
+        </main>
+
+        <aside className="linked-recipes-section">
+          <h3>Recipes</h3>
+          <hr />
+          
+          <div className="recipe-links-stack">
+            {listData?.recipes?.map(recipe => (
+              <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="mini-recipe-card">
+                <span>{recipe.quantity}x {recipe.title}</span>
+                <span className="mini-arrow">🗡️</span>
+              </Link>
+            ))}
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  );
 }

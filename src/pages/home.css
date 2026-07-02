@@ -1,121 +1,225 @@
 .home-page-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px 4rem 20px;
-    color: white;
+  width: 100%;
 }
 
 .banner-container {
-    position: relative;
-    width: 100%;
-    height: 250px; 
-    overflow: hidden;
-    border-radius: 20px;
-    margin: 2rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  border: 1px solid var(--color-border-wood);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .banner-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    object-position: center;
+  width: 100%;
+  display: block;
+  max-height: 220px;
+  object-fit: cover;
 }
 
 .welcome-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 3rem;
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 .welcome-card h2 {
-    font-size: 2rem;
-    margin: 0 0 0.5rem 0;
-    color: var(--trr-primary); 
+  font-family: 'MedievalSharp', cursive;
+  color: var(--color-gold-accent);
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 12px;
 }
 
-.welcome-card p {
-    margin: 0;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
+.welcome-card p, .app-description {
+  color: rgba(242, 245, 232, 0.8);
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 .app-description {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.8;
-    margin-bottom: 3rem;
-}
-
-.explore-heading {
-    font-size: 2.2rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.explore-heading::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), transparent);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  border-top: 1px dashed rgba(92, 64, 51, 0.4);
+  padding-top: 20px;
 }
 
 .home-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 1.5rem;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .home-btn {
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.primary-action {
-    background: var(--trr-primary);
-    color: #1a1a1a;
-    border: none;
-}
-
-.primary-action:hover {
-    background: var(--trr-deep);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px var(--trr-soft);
-}
-
-.secondary-action {
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.secondary-action:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
+  font-family: 'MedievalSharp', cursive;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 .home-btn:active {
-    transform: translateY(0);
+  transform: scale(0.98);
 }
 
+.primary-action {
+  background-color: var(--color-gold-accent);
+  color: #2b1d11;
+  border: 1px solid #947132;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.primary-action:hover {
+  background-color: #d6b26b;
+  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.3);
+}
+
+.secondary-action {
+  background-color: rgba(43, 29, 17, 0.6);
+  color: var(--color-parchment-text);
+  border: 1px solid var(--color-border-wood);
+}
+
+.secondary-action:hover {
+  background-color: rgba(92, 64, 51, 0.4);
+}
+
+/* RECIPEFEED STYLES */
+.recipe-feed-container {
+  margin-top: 24px;
+}
+
+.feed-header-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.feed-section-title {
+  font-family: 'MedievalSharp', cursive;
+  color: var(--color-gold-accent);
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.trending-badge {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.85rem;
+  background-color: #991b1b;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 8px rgba(153, 27, 27, 0.6);
+}
+
+.feed-section-divider {
+  border: 0;
+  border-top: 1px solid rgba(92, 64, 51, 0.4);
+  margin-bottom: 24px;
+}
+
+.recipe-feed-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .recipe-feed-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .recipe-feed-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.feed-card-link {
+  text-decoration: none;
+  display: block;
+}
+
+.recipe-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feed-card-link:hover .recipe-card {
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 0 35px rgba(92, 64, 51, 0.5),
+    0 14px 24px rgba(0, 0, 0, 0.5);
+}
+
+.feed-card-image-wrap {
+  width: 100%;
+  height: 160px;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 1px solid rgba(92, 64, 51, 0.3);
+  position: relative;
+}
+
+.avatar-image-src {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.2) contrast(1.05);
+}
+
+.feed-card-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.feed-card-details h3 {
+  color: var(--color-gold-accent);
+}
+
+.feed-recipe-title {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.3rem;
+  margin: 0 0 8px 0;
+  color: #1c120c;
+}
+
+.feed-recipe-meta {
+  font-family: 'Metamorphous', serif;
+  font-size: 0.8rem;
+  color: #5c4331;
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.feed-card-action {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.95rem;
+  color: #78350f;
+}
+
+.skeleton-card {
+  background-color: rgba(43, 29, 17, 0.3);
+  border: 1px dashed var(--color-border-wood);
+}
+.skeleton {
+  background: rgba(92, 64, 51, 0.2);
+  border-radius: 2px;
+}
+.skeleton-title { height: 24px; width: 70%; margin-bottom: 12px; }
+.skeleton-meta { height: 14px; width: 40%; margin-bottom: 20px; }
+.skeleton-image { height: 160px; width: 100%; }

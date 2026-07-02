@@ -76,14 +76,18 @@ export function RecipeCreator() {
 		}
 	}, [editor, editorData])
 
-	if (editorLoading || ingredientIsLoading) return <p>Loading</p>
-
-	if (ingredientError || editorError) {
-		console.log(`ERROR - useGetIngredients error: ${ingredientError} --- useGetRecipe error: ${editorError}`)
-		return (
-			<p>Something went wrong</p>
-		)
+	if (editorLoading || ingredientIsLoading) {
+	    return (
+	      <div className="creator-workspace parchment-scroll animate-pulse flex items-center justify-center min-h-[400px]">
+	        <p className="font-['MedievalSharp'] text-xl text-[#5c4331]">Preparing inkwells...</p>
+	      </div>
+	    );
 	}
+
+  if (ingredientError || editorError) {
+    console.error(`ERROR - useGetIngredients error: ${ingredientError} --- useGetRecipe error: ${editorError}`);
+    return <p className="text-center text-red-400 font-['MedievalSharp']">Something went wrong while retrieving records.</p>;
+  }
 
 	async function handleSubmit(e) {
 		e.preventDefault()
@@ -143,98 +147,104 @@ export function RecipeCreator() {
 	}
 
 	return (
-		<>
-		<form onSubmit={handleSubmit}>
-		<input
-		  className="recipe-title"
-		  type="text"
-		  value={title}
-		  placeholder="Title"
-		  onChange={e => setTitle(e.target.value)}
-		  required
-		/>
-		<div className="image-upload">
-		    <label className="image-upload-label">
-		      {preview ? (
-			    <div className="preview-container">
-				<img src={preview} alt="Preview" className="image-preview" />
-				<div className="change-image-overlay">Change Image</div>
-			    </div>
-			) : (
-			    <>
-				<strong>📷 Click to upload cover image</strong>
-				<span>JPG, PNG or JPEG</span>
-			    </>
-			)}
-		      <input
-			type="file"
-			className="hidden-file-input"
-			onChange={handleSelectImage}
-			accept=".jpg, .jpeg, .png"
-		      />
-		    </label>
-		  </div>
-		<div className="ingredient-select">
-			<div className="ingredients">
-				<label>Ingredients</label><hr />
-				{ ingredients.map((row) => (
-					<div key={row.rowID} className="ingredient-row">
-						<select
-						value={row.id}
-						onChange={e => handleSelectIngredient(row.rowID, e.target.value)}
-						disabled={ingredientIsLoading}
-						>
-						<option value="">{ingredientIsLoading ? 'Loading...' : 'Select an ingredient'}</option>
-						{
-							ingredientData?.ingredients.map((opt) => (
-								<option key={opt.id} value={opt.id}>
-									{opt.name}
-								</option>
-							))
-						}
-						</select>
-						<input
-							type="number"
-							value={row.quantity}
-							placeholder='1'
-							onChange={e => handleSelectQuantity(row.rowID, e.target.value)}
-							required
-						/>
-				
-				<UnitSelect
-					key={`${row.rowID}-${row.id}`}
-					ingredientId={row.id}
-					selectedUnit={row.units}
-					onSelect={(unit) => handleSelectUnits(row.rowID, unit)}
-				/>
+    <form onSubmit={handleSubmit} className="creator-workspace parchment-scroll">
+      
+      <input
+        className="recipe-title-input"
+        type="text"
+        value={title}
+        placeholder="Name your recipe..."
+        onChange={e => setTitle(e.target.value)}
+        required
+      />
 
-				<button className="rm-btn" type="button" onClick={() => removeRow(row.rowID)}>x</button>
-				</div>
-				
-				))}
+      <div className="image-upload-frame">
+        <label className="image-upload-label">
+          {preview ? (
+            <div className="preview-container">
+              <img src={preview} alt="Formulation Preview" className="image-preview" />
+              <div className="change-image-overlay">Replace Illustration</div>
+            </div>
+          ) : (
+            <>
+              <strong>📷 Scribe an Illustration for this Scroll</strong>
+              <span>Drop or tap to import illustration (JPG, PNG)</span>
+            </>
+          )}
+          <input
+            type="file"
+            className="hidden-file-input"
+            onChange={handleSelectImage}
+            accept=".jpg, .jpeg, .png"
+          />
+        </label>
+      </div>
 
-				<button className="add-btn" type="button" onClick={addRow}>Add</button>
-				<hr />
-			</div>
-		</div>
+      <div className="ingredient-forge-section">
+        <label>Ingredients</label>
+        <hr />
+        
+        <div className="ingredients-stack">
+          {ingredients.map((row) => (
+            <div key={row.rowID} className="ingredient-row">
+              <select
+                value={row.id}
+                onChange={e => handleSelectIngredient(row.rowID, e.target.value)}
+                disabled={ingredientIsLoading}
+              >
+                <option value="">{ingredientIsLoading ? 'Loading ingredients...' : 'Select an ingredient...'}</option>
+                {ingredientData?.ingredients.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.name}
+                  </option>
+                ))}
+              </select>
 
-		<label>Description:</label>
-		<textarea 
-		    placeholder="Description" 
-		    value={description} 
-		    onChange={e => setDescription(e.target.value)} 
-		/><br/>
-		
-		<label>Instructions:</label>
-		<textarea 
-		    placeholder="Instructions" 
-		    value={instructions} 
-		    onChange={e => setInstructions(e.target.value)} 
-		/><br/>
+              <input
+                type="number"
+                value={row.quantity}
+                placeholder="1"
+                min="1"
+                onChange={e => handleSelectQuantity(row.rowID, e.target.value)}
+                required
+              />
+          
+              <UnitSelect
+                key={`${row.rowID}-${row.id}`}
+                ingredientId={row.id}
+                selectedUnit={row.units}
+                onSelect={(unit) => handleSelectUnits(row.rowID, unit)}
+              />
 
-		<button type="submit">{editor ? 'Update Recipe' : 'Create Recipe'}</button>
+              <button className="rm-btn" type="button" onClick={() => removeRow(row.rowID)}>×</button>
+            </div>
+          ))}
+        </div>
 
-		</form>
-		</>
-	);
+        <button className="add-btn-secondary" type="button" onClick={addRow}>
+          ＋ Add
+        </button>
+        <hr />
+      </div>
+
+      <label className="form-label-block">Description</label>
+      <textarea 
+        placeholder="Provide historical context or flavor profiles for this feast..." 
+        value={description} 
+        onChange={e => setDescription(e.target.value)} 
+      />
+      
+      <label className="form-label-block">Instructions</label>
+      <textarea 
+        placeholder="Step-by-step instructions to combine ingredients successfully..." 
+        value={instructions} 
+        onChange={e => setInstructions(e.target.value)} 
+      />
+
+      <button type="submit" className="forge-submit-btn">
+        {editor ? '⚔️ Amend' : '📜 Scribe'}
+      </button>
+
+    </form>
+  );
 }

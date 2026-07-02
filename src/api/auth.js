@@ -1,45 +1,50 @@
-import { useNavigate } from 'react-router'
-
 const API_BASE = import.meta.env.VITE_API_URL
 
 export const authFetcher = async (url, opts) => {
   try {
     let response = await fetch(url, {...opts, credentials: 'include'})
     if (response.status === 401) {
-      const ok = await refreshSession()
-      if (!ok) throw new Error("Session expired")
-      response = await fetch(url, {...opts, credentials: 'include'})
+      const renewed = await refreshSession();
+      if (!renewed) {
+        throw new Error("Your authentication credentials have expired.");
+      }
+      response = await fetch(url, { ...opts, credentials: 'include' });
     }
+
     if (!response.ok) {
-        const data = await response.json() || null
-        throw new Error(`BAD API RESPONSE: ${data}`)
+      const errorData = await response.json().catch(() => null);
+      const errorMessage = errorData?.error || response.statusText || "Unknown failure";
+      throw new Error(errorMessage);
     }
 
-    if (response.status === 204) return null
+    if (response.status === 204) return null;
 
-    const data = await response.json()
-    return data
+    return await response.json();
   } catch (error) {
-    throw new Error(error)
+    throw error;
   }
-}
+};
 
 // Login
 export async function postLogin(email, password) {
 	const opts = {
 		method: "POST",
-		credentials: "include",
 		body: JSON.stringify({ email, password }),
 	};
 
 	try {
-		const response = await fetch(`${API_BASE}/api/sessions`, opts)
-		const data = await response.json()
-		if (!response.ok) throw new Error(`Failed to login: ${data.error}`)
-		return data
-	} catch (error) {
-		console.log(error)
-	}
+      const response = await fetch(`${API_BASE}/api/sessions`, opts);
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        return { ok: false, message: data?.error || "Invalid entry credentials." };
+      }
+
+      return { ok: true, data };
+  } catch (error) {
+    console.error("Login failure:", error);
+    return { ok: false, message: "Something went wrong." };
+  }
 }
 
 // Sign up
@@ -51,12 +56,17 @@ export async function postSignup(email, password, name) {
 
 	try {
 		const response = await fetch(`${API_BASE}/api/users`, opts)
-		const data = await response.json()
-		if (!response.ok) throw new Error(`Failed to register user: ${data.error}`)
-		return data
-	} catch (error) {
-		console.log(error)
-	}
+		const data = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          return { ok: false, message: data?.error || "Registration criteria unmet." };
+        }
+
+        return { ok: true, data };
+    } catch (error) {
+      console.error("Signup configuration failure:", error);
+      return { ok: false, message: "Something went wrong." };
+    }
 }
 
 // Refresh token
