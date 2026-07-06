@@ -24,6 +24,7 @@ export default function Navbar() {
       <div className="tavern-links">
         <NavLink to="/" end>Home</NavLink>
         <NavLink to="explore" end>Explore</NavLink>
+        <NavLink to="contact" end>Contact</NavLink>
         
         {user ? (
           <>
