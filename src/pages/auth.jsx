@@ -8,6 +8,7 @@ import './auth.css'
 export function Login() {
 	const [email, setEmail] = useState('')
 	const [pass, setPass] = useState('')
+	const [showForgotModal, setShowForgotModal] = useState(false)
 	const { login } = useAuth()
 	const navigate = useNavigate()
 
@@ -52,11 +53,114 @@ export function Login() {
         </form>
 
         <div className="auth-footer">
+          <button 
+            type="button" 
+            className="forgot-password-btn"
+            onClick={() => setShowForgotModal(true)}
+          >
+            Forgot Password?
+          </button>
+        </div>
+
+        <div className="auth-footer">
           Don't have an account? <Link to="/signup">Register</Link>
         </div>
       </div>
+
+      {showForgotModal && (
+        <ForgotPasswordModal onClose={() => setShowForgotModal(false)} />
+      )}
     </div>
   );
+}
+
+function ForgotPasswordModal({ onClose }) {
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [status, setStatus] = useState('idle') // idle, success, error
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    if (!email.trim()) {
+      setStatus('error')
+      setMessage('Please enter your email address')
+      return
+    }
+
+    setIsLoading(true)
+    setStatus('idle')
+
+    try {
+      const response = await fetch('/api/resetpassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email.trim() })
+      })
+
+      if (response.ok) {
+        setStatus('success')
+        setMessage('Password reset link sent! Check your email.')
+        setEmail('')
+        setTimeout(() => onClose(), 3000)
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        setStatus('error')
+        setMessage(errorData.error || 'Failed to send reset link. Please try again.')
+      }
+    } catch (error) {
+      setStatus('error')
+      setMessage('An error occurred. Please try again.')
+      console.error('Reset password error:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close-btn" onClick={onClose}>✕</button>
+        
+        <h3>Reset Your Password</h3>
+        <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+        <form onSubmit={handleSubmit} className="forgot-password-form">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+            required
+          />
+
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className="reset-submit-btn"
+          >
+            {isLoading ? 'Sending...' : 'Send Reset Link'}
+          </button>
+
+          {status === 'success' && (
+            <div className="modal-message success">
+              ✓ {message}
+            </div>
+          )}
+
+          {status === 'error' && (
+            <div className="modal-message error">
+              ✕ {message}
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export function Signup() {
