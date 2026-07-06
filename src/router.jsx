@@ -14,6 +14,7 @@ import Privacy from './pages/privacy.jsx'
 import Settings from './pages/settings.jsx'
 import Admin from './pages/admin.jsx'
 import { VerificationPage } from './pages/verify.jsx'
+import Contact from './pages/contact.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
 		children: [
 			{ index: true, Component: Home },
             { path: "admin", Component: Admin },
+            { path: "contact", Component: Contact },
             { path: "terms", Component: Terms },
             { path: "privacy", Component: Privacy },
             { path: "settings", Component: Settings },
