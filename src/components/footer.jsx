@@ -17,6 +17,7 @@ export default function Footer() {
         <div className="footer-links">
           <h4>Directories</h4>
           <Link to="/">Home</Link>
+          <Link to="/contact">Contact</Link>
           {user ? (
             <>
               <Link to="/recipe-creator">Scribe Recipe</Link>
@@ -48,4 +49,3 @@ export default function Footer() {
     </footer>
   );
 }
-
