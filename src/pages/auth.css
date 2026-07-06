@@ -113,3 +113,180 @@
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* Forgot Password Button */
+.forgot-password-btn {
+  background: none;
+  border: none;
+  color: var(--color-gold-accent);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+  padding: 0;
+}
+
+.forgot-password-btn:hover {
+  text-decoration: underline;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: #110b07;
+  border: 2px double var(--color-border-wood);
+  border-radius: 4px;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.7);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--color-gold-accent);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.2);
+}
+
+.modal-content h3 {
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--color-gold-accent);
+  font-size: 1.5rem;
+  margin: 0 0 12px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content p {
+  color: rgba(242, 245, 232, 0.6);
+  font-size: 0.95rem;
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+/* Forgot Password Form */
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forgot-password-form input {
+  width: 100%;
+  background-color: rgba(43, 29, 17, 0.5);
+  border: 1px solid var(--color-border-wood);
+  border-radius: 4px;
+  padding: 12px 14px;
+  color: var(--color-parchment-text);
+  font-family: 'Metamorphous', serif;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.forgot-password-form input:focus {
+  outline: none;
+  border-color: var(--color-gold-accent);
+  background-color: rgba(92, 64, 51, 0.2);
+}
+
+.forgot-password-form input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reset-submit-btn {
+  font-family: 'MedievalSharp', cursive;
+  background-color: var(--color-gold-accent);
+  color: #2b1d11;
+  border: 1px solid #947132;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.reset-submit-btn:hover:not(:disabled) {
+  background-color: #d6b26b;
+}
+
+.reset-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.reset-submit-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+/* Modal Messages */
+.modal-message {
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.modal-message.success {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid #22c55e;
+}
+
+.modal-message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+@media (max-width: 640px) {
+  .modal-content {
+    padding: 32px 24px;
+    margin: 16px;
+  }
+
+  .modal-content h3 {
+    font-size: 1.3rem;
+  }
+
+  .auth-card {
+    padding: 24px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.5rem;
+  }
+}
