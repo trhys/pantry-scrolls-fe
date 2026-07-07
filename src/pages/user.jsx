@@ -111,106 +111,6 @@ export function UserProfile() {
 		/>
 	    </label>
 
-	    <div>
-		<h2>{user.name}</h2>
-		<p className="profile-email">{user.email || 'chef@thereciperepo.com'}</p>
-	   	</div>
-
-		{image && (
-		    <button 
-			type="button" 
-			className="save-profile-btn" 
-			onClick={handleSubmitImage}
-			disabled={isSaving}
-		    >
-			{isSaving ? 'Saving...' : 'Save New Avatar'}
-		    </button>
-		)}
-	</header>
-
-
-            <div className="profile-stats-grid">
-                <div className="stat-card">
-                    <span className="stat-number">{userData.recipes.length}</span>
-                    <span className="stat-label">Recipes Shared</span>
-                </div>
-                <div className="stat-card">
-                    <span className="stat-number">{userData.shopping_lists.length}</span>
-                    <span className="stat-label">Active Lists</span>
-                </div>
-            </div>
-
-            <div className="profile-dashboard-layout">
-                <section className="profile-section">
-                    <h3>Your Shared Recipes</h3>
-                    <hr />
-                    {userLoading ? <div className="skeleton" style={{ height: '100px' }} /> : (
-                        <div className="profile-recipes-list">
-                            {userData.length === 0 ? (
-                                <p className="empty-section-text">You haven't created any recipes yet.</p>
-                            ) : (
-                                userData.recipes.map(recipe => (
-                                    <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="profile-recipe-item">
-                                        <img src={recipe.image_url} alt={recipe.title} />
-                                        <div className="profile-recipe-details">
-                                            <h4>{recipe.title}</h4>
-                                        </div>
-					<div className="list-actions-wrapper">
-						<div className="recipe-list-btns">
-						<Link to={`/recipes/${recipe.id}/edit`} className="edit-recipe-link">
-						<button 
-						    type="button" 
-						    className="edit-recipe-btn"
-						    title="Edit Recipe"
-						>
-						    ✎	
-						</button>
-						</Link>
-						<button 
-						    type="button" 
-						    className="delete-recipe-btn"
-						    onClick={(e) => triggerDelete(e, recipe.id)}
-						    title="Delete Recipe"
-						>
-						    🗑️
-						</button>
-						</div>
-						<div className="list-arrow">→</div>
-				    </div>
-                                    </Link>
-                                ))
-                            )}
-                        </div>
-                    )}
-                </section>
-
-                <section className="profile-section">
-                    <h3>Recent Shopping Lists</h3>
-                    <hr />
-                    {userLoading ? <div className="skeleton" style={{ height: '100px' }} /> : (
-                        <div className="profile-lists-stack">
-                            {userData.length === 0 ? (
-                                <p className="empty-section-text">No active shopping lists found.</p>
-                            ) : (
-                                userData.shopping_lists.slice(0, 3).map(list => (
-                                    <Link to={`/shopping-lists/${list.id}`} key={list.id} className="profile-list-item">
-                                        <span>📋 {list.name}</span>
-                                        <span className="arrow-indicator">→</span>
-                                    </Link>
-                                ))
-                            )}
-                        </div>
-                    )}
-                </section>
-            </div>
-            <input 
-              type="file" 
-              className="hidden-file-input" 
-              onChange={handleImageUpload} 
-              accept=".jpg, .jpeg, .png" 
-            />
-          </label>
-
           <div className="flex-grow">
             <h2>{user.name}</h2>
             <p className="profile-email">{user.email || 'artisan@pantryscrolls.com'}</p>
@@ -226,7 +126,7 @@ export function UserProfile() {
               {isSaving ? 'Saving...' : 'Save new Avatar'}
             </button>
           )}
-        </header>
+		</header>
 
         <div className="profile-stats-grid">
           <div className="stat-card">
@@ -235,7 +135,7 @@ export function UserProfile() {
           </div>
           <div className="stat-card">
             <span className="stat-number">{userData?.shopping_lists?.length || 0}</span>
-            <span className="stat-label">Active Ledgers</span>
+            <span className="stat-label">Active Lists</span>
           </div>
         </div>
 
@@ -280,11 +180,11 @@ export function UserProfile() {
           </section>
 
           <section className="profile-section">
-            <h3>Recent Ledgers</h3>
+            <h3>Recent Lists</h3>
             <hr />
             <div className="profile-lists-stack">
               {!userData?.shopping_lists || userData.shopping_lists.length === 0 ? (
-                <p className="empty-section-text">No active ledgers found.</p>
+                <p className="empty-section-text">No active shopping lists found.</p>
               ) : (
                 userData.shopping_lists.slice(0, 3).map(list => (
                   <Link to={`/shopping-lists/${list.id}`} key={list.id} className="profile-list-item">
