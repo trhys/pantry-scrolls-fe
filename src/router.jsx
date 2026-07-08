@@ -14,6 +14,7 @@ import Privacy from './pages/privacy.jsx'
 import Settings from './pages/settings.jsx'
 import Admin from './pages/admin.jsx'
 import { VerificationPage } from './pages/verify.jsx'
+import { ResetPasswordPage } from './pages/resetPassword.jsx'
 import Contact from './pages/contact.jsx'
 
 const router = createBrowserRouter([
@@ -37,7 +38,8 @@ const router = createBrowserRouter([
 			{ path: "shopping-lists/:id", Component: ShoppingList },
 			{ path: "profile", Component: UserProfile },
 			{ path: "recipes/:id/edit", Component: RecipeCreator },
-            { path: "verify/:token", Component: VerificationPage }
+            { path: "verify/:token", Component: VerificationPage },
+            { path: "resetpassword/:token", Component: ResetPasswordPage }
 		],
 	},
 ])
