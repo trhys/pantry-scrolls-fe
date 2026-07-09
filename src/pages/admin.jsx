@@ -1,11 +1,13 @@
 import { redirect } from 'react-router'
 import { useAuth } from '../components/auth.jsx'
 //import { useGetAdmin } from '../api/auth.jsx'
-import { useGetTotalUsers } from '../api/metrics.jsx'
+import { useGetTotalUsers, useGetTotalRecipes } from '../api/metrics.jsx'
 import './admin.css'
 
 export default function AdminDashboard() {
-  const {totalUsers, error, isLoading} = useGetTotalUsers()
+  const { totalUsers, error, isLoading } = useGetTotalUsers()
+  const { totalRecipes, error, isLoading } = useGetTotalRecipes()
+
   return (
     <div className="dashboard-container">
           
