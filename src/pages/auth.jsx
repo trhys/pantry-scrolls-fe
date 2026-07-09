@@ -231,6 +231,13 @@ export function Signup() {
             onChange={e => setName(e.target.value)}
             required
           />
+          <p className="auth-legal-copy">
+            By creating an account, you agree to the Pantry Scrolls{' '}
+            <Link to="/terms">Terms of Service</Link> and{' '}
+            <Link to="/privacy">Privacy Policy</Link>. We may send you
+            account-related emails, such as verification and password reset
+            messages.
+          </p>
           <button className="submit-btn" type="submit">Register</button>
         </form>
         
