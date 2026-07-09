@@ -9,3 +9,8 @@ export function useGetTotalUsers() {
   const { data, error, isLoading } = useSWR(`/api/users`, fetcher)
   return { data, error, isLoading }
 }
+
+export function useGetTotalRecipes() {
+  const { data, error, isLoading } = useSWR(`/api/recipes?total=true`, fetcher)
+  return { data, error, isLoading }
+}
