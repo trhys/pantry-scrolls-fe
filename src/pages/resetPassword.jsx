@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import '../styles/auth.css';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+import './auth.css';
 
 export function ResetPasswordPage() {
   const { token } = useParams();
@@ -42,7 +40,7 @@ export function ResetPasswordPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/resetpassword`, {
+      const response = await fetch(`/api/resetpassword`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

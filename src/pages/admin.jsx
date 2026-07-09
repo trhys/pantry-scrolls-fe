@@ -1,14 +1,16 @@
 import { redirect } from 'react-router'
 import { useAuth } from '../components/auth.jsx'
 //import { useGetAdmin } from '../api/auth.jsx'
+import { useGetTotalUsers } from '../api/metrics.jsx'
 import './admin.css'
 
 export default function AdminDashboard() {
+  const {totalUsers, error, isLoading} = useGetTotalUsers()
   return (
     <div className="dashboard-container">
           
       <aside className="dashboard-sidebar">
-        <div className="sidebar-logo">Small Council</div>
+        <div className="sidebar-logo">Metrics</div>
         <nav className="sidebar-nav">
           <a href="#overview" className="nav-item active">
             Chamber View <span className="arrow-indicator">🗡️</span>
@@ -23,37 +25,37 @@ export default function AdminDashboard() {
         
         <header className="dashboard-header">
           <div className="header-search">
-            <input type="text" placeholder="Scry ledger metrics..." className="search-input" />
+            <input type="text" placeholder="Search..." className="search-input" />
           </div>
           <div className="header-profile">
-            <span className="profile-email-badge">👑 Spymaster Admin</span>
+            <span className="profile-email-badge">👑 Admin</span>
           </div>
         </header>
 
         <main className="dashboard-content">
           <div className="content-header">
-            <h2 className="page-title">Council Overview</h2>
-            <button className="add-list-btn">Scribe Report Manifest</button>
+            <h2 className="page-title">Overview</h2>
+            <button className="add-list-btn">Scribe Report</button>
           </div>
           
           <hr className="feed-section-divider" />
 
           <section className="treasury-stats-grid">
             <div className="stat-card">
-              <span className="stat-number">24,500ℊ</span>
-              <span className="stat-label">Total Gold Income</span>
+              <span className="stat-number">{totalUsers}</span>
+              <span className="stat-label">Total Users</span>
             </div>
             <div className="stat-card">
-              <span className="stat-number">1,240</span>
-              <span className="stat-label">Active Artisans</span>
+              <span className="stat-number">---</span>
+              <span className="stat-label">---</span>
             </div>
             <div className="stat-card">
-              <span className="stat-number">85</span>
-              <span className="stat-label">Pending Quests</span>
+              <span className="stat-number">{totalRecipes}</span>
+              <span className="stat-label">Total Recipes</span>
             </div>
             <div className="stat-card">
-              <span className="stat-number">99.9%</span>
-              <span className="stat-label">Ward Integrity</span>
+              <span className="stat-number">---</span>
+              <span className="stat-label">---</span>
             </div>
           </section>
 
