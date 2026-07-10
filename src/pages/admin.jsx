@@ -4,14 +4,11 @@ import { useMaintenanceContext } from '../context/MaintenanceContext.jsx'
 import './admin.css'
 
 export default function AdminDashboard() {
-  const { data: usersData } = useGetTotalUsers()
-  const { data: recipesData } = useGetTotalRecipes()
+  const { totalUsers } = useGetTotalUsers()
+  const { totalRecipes } = useGetTotalRecipes()
   const { isMaintenanceActive, isLoading: maintenanceLoading, toggleMaintenance } = useMaintenanceContext()
   const [isToggling, setIsToggling] = useState(false)
   const [toggleError, setToggleError] = useState(null)
-
-  const totalUsers = usersData
-  const totalRecipes = recipesData
 
   async function handleToggleMaintenance() {
     setIsToggling(true)
