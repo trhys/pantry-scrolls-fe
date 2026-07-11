@@ -2,12 +2,14 @@ import { Outlet } from 'react-router'
 import { useAuth } from './components/auth.jsx'
 import Navbar from './components/navbar.jsx'
 import Footer from './components/footer.jsx'
+import { MaintenanceBanner } from './components/MaintenanceBanner.jsx'
 
 export default function App() {
   const { user, logout } = useAuth();
 
   return (
     <div className="realm-layout">
+      <MaintenanceBanner />
       <Navbar user={user} logout={logout} />
 
       <main className="realm-container">

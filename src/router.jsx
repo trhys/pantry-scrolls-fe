@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import GlobalErrorBoundary from './errorBoundary.jsx'
 import App from './App.jsx'
-import { NotFound404, ServerError500 } from './components/error.jsx'
 import Home from './pages/home.jsx'
 import Recipe from './pages/recipe.jsx'
 import Explorer from './pages/explore.jsx'
@@ -16,6 +15,7 @@ import Admin from './pages/admin.jsx'
 import { VerificationPage } from './pages/verify.jsx'
 import { ResetPasswordPage } from './pages/resetPassword.jsx'
 import Contact from './pages/contact.jsx'
+import { DeactivationCancellationPage } from './pages/deactivationCancel.jsx'
 
 const router = createBrowserRouter([
 	{
@@ -39,7 +39,8 @@ const router = createBrowserRouter([
 			{ path: "profile", Component: UserProfile },
 			{ path: "recipes/:id/edit", Component: RecipeCreator },
             { path: "verify/:token", Component: VerificationPage },
-            { path: "resetpassword/:token", Component: ResetPasswordPage }
+			{ path: "resetpassword/:token", Component: ResetPasswordPage },
+			{ path: "cancel-deactivation/:token", Component: DeactivationCancellationPage }
 		],
 	},
 ])

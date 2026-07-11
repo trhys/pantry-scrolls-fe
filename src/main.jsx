@@ -3,13 +3,15 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router/dom'
 import router from './router.jsx'
 import { AuthProvider } from './components/auth.jsx'
+import { MaintenanceProvider } from './context/MaintenanceContext.jsx'
 import './index.css'
-import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    	<AuthProvider>
-	<RouterProvider router={router} />
-	</AuthProvider>
+    <AuthProvider>
+      <MaintenanceProvider>
+        <RouterProvider router={router} />
+      </MaintenanceProvider>
+    </AuthProvider>
   </StrictMode>,
 )

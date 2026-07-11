@@ -1,12 +1,24 @@
-import { redirect } from 'react-router'
-import { useAuth } from '../components/auth.jsx'
-//import { useGetAdmin } from '../api/auth.jsx'
+import { useState } from 'react'
 import { useGetTotalUsers, useGetTotalRecipes } from '../api/metrics.jsx'
+import { useMaintenanceContext } from '../context/MaintenanceContext.jsx'
 import './admin.css'
 
 export default function AdminDashboard() {
-  const { totalUsers, error, isLoading } = useGetTotalUsers()
-  const { totalRecipes, error, isLoading } = useGetTotalRecipes()
+  const { totalUsers } = useGetTotalUsers()
+  const { totalRecipes } = useGetTotalRecipes()
+  const { isMaintenanceActive, isLoading: maintenanceLoading, toggleMaintenance } = useMaintenanceContext()
+  const [isToggling, setIsToggling] = useState(false)
+  const [toggleError, setToggleError] = useState(null)
+
+  async function handleToggleMaintenance() {
+    setIsToggling(true)
+    setToggleError(null)
+    const result = await toggleMaintenance()
+    if (result && !result.ok) {
+      setToggleError(result.message || 'Failed to update maintenance mode.')
+    }
+    setIsToggling(false)
+  }
 
   return (
     <div className="dashboard-container">
@@ -91,6 +103,24 @@ export default function AdminDashboard() {
               <hr className="feed-section-divider" />
               
               <div className="profile-lists-stack">
+                <button
+                  type="button"
+                  className="dispatch-action-btn"
+                  onClick={handleToggleMaintenance}
+                  disabled={isToggling || maintenanceLoading}
+                >
+                  <div>
+                    <h4>Realm Maintenance Banner</h4>
+                    <span className="timestamp-hint">
+                      {maintenanceLoading ? 'Loading...' : isMaintenanceActive ? '🔴 Currently Enabled' : '🟢 Currently Disabled'}
+                    </span>
+                    {toggleError && <span className="timestamp-hint" style={{color: '#f87171'}}>{toggleError}</span>}
+                  </div>
+                  <span className="arrow-indicator">
+                    {isToggling ? '⏳' : isMaintenanceActive ? '🚫' : '⚠️'}
+                  </span>
+                </button>
+
                 <button type="button" className="dispatch-action-btn">
                   <div>
                     <h4>Purge Magic Archive Cache</h4>

@@ -1,42 +1,38 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext } from 'react'
+import { useGetMaintenanceStatus, putMaintenanceStatus } from '../api/maintenance.js'
 
 const MaintenanceContext = createContext()
 
+const DEFAULT_MESSAGE = 'System maintenance in progress. Please check back soon.'
+
 export function MaintenanceProvider({ children }) {
-  const [isMaintenanceActive, setIsMaintenanceActive] = useState(() => {
-    // Load from localStorage on initialization
-    const stored = localStorage.getItem('maintenance_active')
-    return stored ? JSON.parse(stored) : false
-  })
-  
-  const [maintenanceMessage, setMaintenanceMessage] = useState(() => {
-    return localStorage.getItem('maintenance_message') || 'System maintenance in progress. Please check back soon.'
-  })
+  const { data, isLoading, mutate } = useGetMaintenanceStatus()
 
-  // Persist to localStorage whenever state changes
-  useEffect(() => {
-    localStorage.setItem('maintenance_active', JSON.stringify(isMaintenanceActive))
-  }, [isMaintenanceActive])
+  const isMaintenanceActive = data?.active ?? false
+  const maintenanceMessage = data?.message ?? DEFAULT_MESSAGE
 
-  useEffect(() => {
-    localStorage.setItem('maintenance_message', maintenanceMessage)
-  }, [maintenanceMessage])
-
-  const toggleMaintenance = () => {
-    setIsMaintenanceActive(!isMaintenanceActive)
+  const toggleMaintenance = async () => {
+    const newActive = !isMaintenanceActive
+    mutate({ ...data, active: newActive }, false)
+    const result = await putMaintenanceStatus(newActive, maintenanceMessage)
+    mutate()
+    return result
   }
 
-  const updateMaintenanceMessage = (message) => {
-    setMaintenanceMessage(message)
+  const updateMaintenanceMessage = async (message) => {
+    mutate({ ...data, message }, false)
+    const result = await putMaintenanceStatus(isMaintenanceActive, message)
+    mutate()
+    return result
   }
 
   return (
     <MaintenanceContext.Provider value={{
       isMaintenanceActive,
-      setIsMaintenanceActive,
       maintenanceMessage,
-      updateMaintenanceMessage,
-      toggleMaintenance
+      isLoading,
+      toggleMaintenance,
+      updateMaintenanceMessage
     }}>
       {children}
     </MaintenanceContext.Provider>

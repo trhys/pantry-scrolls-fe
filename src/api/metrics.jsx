@@ -1,16 +1,13 @@
 import useSWR from 'swr'
-import { authFetcher } from './auth.js'
-
-const API_BASE = import.meta.env.VITE_API_URL
 
 const fetcher = (url) => fetch(url).then(res => res.json());
 
 export function useGetTotalUsers() {
   const { data, error, isLoading } = useSWR(`/api/users`, fetcher)
-  return { data, error, isLoading }
+  return { totalUsers: data?.total, error, isLoading }
 }
 
 export function useGetTotalRecipes() {
   const { data, error, isLoading } = useSWR(`/api/recipes?total=true`, fetcher)
-  return { data, error, isLoading }
+  return { totalRecipes: data?.total, error, isLoading }
 }
