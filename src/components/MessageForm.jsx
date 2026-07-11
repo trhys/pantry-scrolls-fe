@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { postMessage } from '../api/messages.js';
 import './MessageForm.css';
 
@@ -71,9 +71,9 @@ const MessageForm = ({ onSuccess, onError }) => {
 
   return (
     <div className="message-form-container">
-      <h2>Send us a Message</h2>
+      <h2 className="message-form-title">Send us a Message</h2>
       <form onSubmit={handleSubmit} className="message-form">
-        <div className="form-group">
+        <div className="message-form-group">
           <label htmlFor="email">Email Address</label>
           <input
             type="email"
@@ -86,7 +86,7 @@ const MessageForm = ({ onSuccess, onError }) => {
           />
         </div>
 
-        <div className="form-group">
+        <div className="message-form-group">
           <label htmlFor="message">Message</label>
           <textarea
             id="message"
@@ -102,19 +102,19 @@ const MessageForm = ({ onSuccess, onError }) => {
         <button
           type="submit"
           disabled={isLoading}
-          className="submit-button"
+          className="message-submit-button"
         >
           {isLoading ? 'Sending...' : 'Send Message'}
         </button>
 
         {submitStatus === 'success' && (
-          <div className="status-message success">
+          <div className="message-status success">
             ✓ Message sent successfully!
           </div>
         )}
 
         {submitStatus === 'error' && (
-          <div className="status-message error">
+          <div className="message-status error">
             ✗ {errorMessage}
           </div>
         )}

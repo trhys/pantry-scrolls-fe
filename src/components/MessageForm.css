@@ -1,17 +1,22 @@
 .message-form-container {
   max-width: 600px;
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(43, 29, 17, 0.4);
+  border: 1px double var(--color-border-wood);
+  border-radius: 4px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
 }
 
-.message-form-container h2 {
+.message-form-title {
+  font-family: 'Cinzel Decorative', serif;
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: var(--color-gold-accent);
   font-size: 1.5rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .message-form {
@@ -20,78 +25,89 @@
   gap: 1.5rem;
 }
 
-.form-group {
+.message-form-group {
   display: flex;
   flex-direction: column;
 }
 
-.form-group label {
+.message-form-group label {
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: #555;
+  font-family: 'MedievalSharp', cursive;
+  font-weight: 700;
+  color: rgba(242, 245, 232, 0.8);
   font-size: 1rem;
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
+.message-form-group input,
+.message-form-group textarea {
+  width: 100%;
+  background-color: rgba(43, 29, 17, 0.5);
+  border: 1px solid var(--color-border-wood);
   border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: border-color 0.3s ease;
+  padding: 12px 14px;
+  color: var(--color-parchment-text);
+  font-family: 'Metamorphous', serif;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.message-form-group input:focus,
+.message-form-group textarea:focus {
   outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  border-color: var(--color-gold-accent);
+  background-color: rgba(92, 64, 51, 0.2);
 }
 
-.form-group input:disabled,
-.form-group textarea:disabled {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+.message-form-group input:disabled,
+.message-form-group textarea:disabled {
   opacity: 0.6;
-}
-
-.submit-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover:not(:disabled) {
-  background-color: #357abd;
-}
-
-.submit-button:disabled {
-  background-color: #ccc;
   cursor: not-allowed;
 }
 
-.status-message {
-  padding: 1rem;
+.message-submit-button {
+  padding: 12px;
+  background-color: var(--color-gold-accent);
+  color: #2b1d11;
+  border: 1px solid #947132;
+  border-radius: 4px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.message-submit-button:hover:not(:disabled) {
+  background-color: #d6b26b;
+}
+
+.message-submit-button:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.message-submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.message-status {
+  padding: 12px;
   border-radius: 4px;
   font-weight: 500;
   text-align: center;
+  font-size: 0.9rem;
 }
 
-.status-message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+.message-status.success {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  border: 1px solid #22c55e;
 }
 
-.status-message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+.message-status.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid #ef4444;
 }

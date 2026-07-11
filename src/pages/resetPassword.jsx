@@ -102,8 +102,8 @@ export function ResetPasswordPage() {
         
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-form-group">
             <label htmlFor="password">New Password</label>
             <input
               id="password"
@@ -116,7 +116,7 @@ export function ResetPasswordPage() {
             />
           </div>
 
-          <div className="form-group">
+          <div className="auth-form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
               id="confirmPassword"
@@ -131,7 +131,7 @@ export function ResetPasswordPage() {
 
           <button 
             type="submit" 
-            className="auth-button"
+            className="submit-btn"
             disabled={loading}
           >
             {loading ? 'Resetting Password...' : 'Reset Password'}
