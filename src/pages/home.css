@@ -126,17 +126,86 @@
   margin-bottom: 24px;
 }
 
-.recipe-feed-grid {
+.recipe-feed-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
-@media (min-width: 640px) {
-  .recipe-feed-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @media (min-width: 1024px) {
-  .recipe-feed-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .recipe-feed-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+  }
+}
+
+.featured-link {
+  height: 100%;
+}
+
+.featured-recipe-card {
+  min-height: 100%;
+}
+
+.feed-card-image-wrap.featured-image-wrap {
+  height: 280px;
+}
+
+.recipe-feed-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.compact-link {
+  display: block;
+}
+
+.recipe-card.compact-recipe-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px;
+  align-items: center;
+}
+
+.feed-card-image-wrap.compact-image-wrap {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 0;
+}
+
+.compact-card-details {
+  min-width: 0;
+}
+
+.compact-card-content {
+  min-width: 0;
+}
+
+.compact-card-details .feed-recipe-title {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.compact-card-details .feed-recipe-meta {
+  margin-bottom: 8px;
+}
+
+.compact-card-details .feed-card-action {
+  margin-top: 0;
+}
+
+@media (max-width: 1023px) {
+  .recipe-feed-scroll-list {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
 }
 
 .feed-card-link {
@@ -223,3 +292,10 @@
 .skeleton-title { height: 24px; width: 70%; margin-bottom: 12px; }
 .skeleton-meta { height: 14px; width: 40%; margin-bottom: 20px; }
 .skeleton-image { height: 160px; width: 100%; }
+.featured-skeleton-image { height: 280px; margin-bottom: 14px; }
+.compact-skeleton-image { width: 88px; height: 88px; margin-bottom: 0; }
+
+.empty-feed-copy {
+  color: rgba(242, 245, 232, 0.8);
+  text-align: center;
+}
