@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+.env*
+*.log
+.git
+.github
+.vscode
+.idea
+*.suo
+*.sw?
+.DS_Store
