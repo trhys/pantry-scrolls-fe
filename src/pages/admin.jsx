@@ -125,7 +125,7 @@ export default function AdminDashboard() {
         <main className="dashboard-content">
           <div className="content-header">
             <h2 className="page-title">Overview</h2>
-            <button className="add-list-btn">Scribe Report</button>
+            <button className="add-list-btn">---</button>
           </div>
 
           <hr className="feed-section-divider" />
@@ -157,16 +157,16 @@ export default function AdminDashboard() {
               <div className="profile-recipes-list">
                 <div className="council-activity-row">
                   <div className="activity-details">
-                    <h4>Artisan registration surge detected</h4>
-                    <span className="timestamp-hint">12 mins ago</span>
+                    <h4>---</h4>
+                    <span className="timestamp-hint">---</span>
                   </div>
                   <span className="arrow-indicator">🗡️</span>
                 </div>
 
                 <div className="council-activity-row">
                   <div className="activity-details">
-                    <h4>Archive validation sequence complete</h4>
-                    <span className="timestamp-hint">1 hour ago</span>
+                    <h4>---</h4>
+                    <span className="timestamp-hint">---</span>
                   </div>
                   <span className="arrow-indicator">🗡️</span>
                 </div>
@@ -237,14 +237,14 @@ export default function AdminDashboard() {
 
                 <button type="button" className="dispatch-action-btn">
                   <div>
-                    <h4>Purge Magic Archive Cache</h4>
+                    <h4>---</h4>
                   </div>
                   <span className="arrow-indicator">⚡</span>
                 </button>
 
                 <button type="button" className="dispatch-action-btn">
                   <div>
-                    <h4>Seal Backup Crypt Blueprint</h4>
+                    <h4>---</h4>
                   </div>
                   <span className="arrow-indicator">🔮</span>
                 </button>
