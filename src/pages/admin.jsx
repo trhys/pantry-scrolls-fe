@@ -1,9 +1,31 @@
 import { useEffect, useState } from 'react'
 import { useGetTotalUsers, useGetTotalRecipes } from '../api/metrics.jsx'
 import { useMaintenanceContext } from '../context/MaintenanceContext.jsx'
+import { useAuth } from '../components/auth.jsx'
+import { authFetcher } from '../api/auth.js'
 import './admin.css'
 
+const API_BASE = import.meta.env.VITE_API_URL
+
 export default function AdminDashboard() {
+  const { user, loading: authLoading } = useAuth()
+  const [isAdmin, setIsAdmin] = useState(null)
+
+  useEffect(() => {
+    if (authLoading || !user) return
+
+    const verifyAdmin = async () => {
+      try {
+        await authFetcher(`${API_BASE}/api/admin/check`, { method: 'GET' })
+        setIsAdmin(true)
+      } catch {
+        setIsAdmin(false)
+      }
+    }
+
+    verifyAdmin()
+  }, [authLoading, user])
+
   const { totalUsers } = useGetTotalUsers()
   const { totalRecipes } = useGetTotalRecipes()
   const {
@@ -50,6 +72,30 @@ export default function AdminDashboard() {
     }
 
     setIsSavingMessage(false)
+  }
+
+  if (authLoading || (user && isAdmin === null)) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">Verifying access...</p>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">You must log in to access this page.</p>
+      </div>
+    )
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">Access denied. Admin privileges required.</p>
+      </div>
+    )
   }
 
   return (
