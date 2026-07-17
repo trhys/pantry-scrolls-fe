@@ -355,12 +355,20 @@ body {
   border-radius: 12px;
 }
 
-.status-dot {
+.status-dot-online {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background-color: #10b981;
   box-shadow: 0 0 8px #10b981;
+}
+
+.status-dot-offline {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
 }
 
 .parchment-scroll {

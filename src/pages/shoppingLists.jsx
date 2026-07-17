@@ -205,7 +205,7 @@ export function ShoppingList() {
                     onChange={() => handleToggleCheck(item.id)}
                   />
                   <span className="custom-checkbox"></span>
-                  <span className="item-name">{item.name}</span>
+                  <span className="item-name">{item.name} --- </span>
                 </label>
                 
                 <span className="item-amount">{item.quantity} {item.unit}</span>
@@ -222,7 +222,6 @@ export function ShoppingList() {
             {listData?.recipes?.map(recipe => (
               <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="mini-recipe-card">
                 <span>{recipe.quantity}x {recipe.title}</span>
-                <span className="mini-arrow">🗡️</span>
               </Link>
             ))}
           </div>

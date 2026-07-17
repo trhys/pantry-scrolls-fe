@@ -1,9 +1,11 @@
 import { Link } from 'react-router'
 import { useAuth } from './auth.jsx'
+import { useMaintenanceContext } from '../context/MaintenanceContext.jsx'
 
 export default function Footer() {
     const { user } = useAuth()
     const currentYear = new Date().getFullYear()
+    const { isMaintenanceActive } = useMaintenanceContext()
 
     return (
         <footer className="app-footer">
@@ -17,24 +19,24 @@ export default function Footer() {
         <div className="footer-links">
           <h4>Directories</h4>
           <Link to="/">Home</Link>
-          <Link to="/contact">Contact</Link>
-          {user ? (
+                    {user ? (
             <>
               <Link to="/recipe-creator">Scribe Recipe</Link>
-              <Link to="/shopping-lists">Provisions</Link>
+              <Link to="/shopping-lists">Shopping Lists</Link>
             </>
           ) : (
             <>
-              <Link to="/login">Enter the Archive</Link>
+              <Link to="/login">Login</Link>
               <Link to="/signup">Register</Link>
             </>
           )}
         </div>
 
         <div className="footer-links"> 
-          <h4>Edicts</h4>
+          <h4>About Us</h4>
           <Link to="/terms">Terms of Service</Link>
           <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/contact">Contact Us</Link>
         </div>
       </div>
 
@@ -43,7 +45,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <p>&copy; {currentYear} Pantry Scrolls. Chronicled for passionate culinary artisans.</p>
         <div className="footer-status">
-          <span className="status-dot"></span> Magic Wards Active
+          <span className={ isMaintenanceActive ? 'status-dot-offline' : 'status-dot-online' }></span>{ isMaintenanceActive ? 'Offline' : 'Online' }
         </div>
       </div>
     </footer>
