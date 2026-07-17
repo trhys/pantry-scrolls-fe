@@ -1,9 +1,31 @@
 import { useEffect, useState } from 'react'
 import { useGetTotalUsers, useGetTotalRecipes } from '../api/metrics.jsx'
 import { useMaintenanceContext } from '../context/MaintenanceContext.jsx'
+import { useAuth } from '../components/auth.jsx'
+import { authFetcher } from '../api/auth.js'
 import './admin.css'
 
+const API_BASE = import.meta.env.VITE_API_URL
+
 export default function AdminDashboard() {
+  const { user, loading: authLoading } = useAuth()
+  const [isAdmin, setIsAdmin] = useState(null)
+
+  useEffect(() => {
+    if (authLoading || !user) return
+
+    const verifyAdmin = async () => {
+      try {
+        await authFetcher(`${API_BASE}/api/admin/check`, { method: 'GET' })
+        setIsAdmin(true)
+      } catch {
+        setIsAdmin(false)
+      }
+    }
+
+    verifyAdmin()
+  }, [authLoading, user])
+
   const { totalUsers } = useGetTotalUsers()
   const { totalRecipes } = useGetTotalRecipes()
   const {
@@ -52,6 +74,30 @@ export default function AdminDashboard() {
     setIsSavingMessage(false)
   }
 
+  if (authLoading || (user && isAdmin === null)) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">Verifying access...</p>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">You must log in to access this page.</p>
+      </div>
+    )
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-['MedievalSharp'] text-xl text-amber-500">Access denied. Admin privileges required.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="dashboard-container">
       <aside className="dashboard-sidebar">
@@ -79,7 +125,7 @@ export default function AdminDashboard() {
         <main className="dashboard-content">
           <div className="content-header">
             <h2 className="page-title">Overview</h2>
-            <button className="add-list-btn">Scribe Report</button>
+            <button className="add-list-btn">---</button>
           </div>
 
           <hr className="feed-section-divider" />
@@ -111,16 +157,16 @@ export default function AdminDashboard() {
               <div className="profile-recipes-list">
                 <div className="council-activity-row">
                   <div className="activity-details">
-                    <h4>Artisan registration surge detected</h4>
-                    <span className="timestamp-hint">12 mins ago</span>
+                    <h4>---</h4>
+                    <span className="timestamp-hint">---</span>
                   </div>
                   <span className="arrow-indicator">🗡️</span>
                 </div>
 
                 <div className="council-activity-row">
                   <div className="activity-details">
-                    <h4>Archive validation sequence complete</h4>
-                    <span className="timestamp-hint">1 hour ago</span>
+                    <h4>---</h4>
+                    <span className="timestamp-hint">---</span>
                   </div>
                   <span className="arrow-indicator">🗡️</span>
                 </div>
@@ -191,14 +237,14 @@ export default function AdminDashboard() {
 
                 <button type="button" className="dispatch-action-btn">
                   <div>
-                    <h4>Purge Magic Archive Cache</h4>
+                    <h4>---</h4>
                   </div>
                   <span className="arrow-indicator">⚡</span>
                 </button>
 
                 <button type="button" className="dispatch-action-btn">
                   <div>
-                    <h4>Seal Backup Crypt Blueprint</h4>
+                    <h4>---</h4>
                   </div>
                   <span className="arrow-indicator">🔮</span>
                 </button>
