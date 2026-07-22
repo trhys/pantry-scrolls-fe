@@ -57,7 +57,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            <NavLink to="login" end>Enter Archive</NavLink>
+            <NavLink to="login" end>Login</NavLink>
             <NavLink to="signup" end>Register</NavLink>
           </>
         )}

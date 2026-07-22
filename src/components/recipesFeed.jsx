@@ -10,8 +10,8 @@ export default function RecipeFeed() {
 	if (isLoading) return (
       <div className="recipe-feed-container">
         <div className="feed-header-block">
-          <h2 className="feed-section-title">Trending Recipes</h2>
-          <span className="trending-badge">🔥 Community Hotlist</span>
+          <h2 className="feed-section-title">Recipe Feed</h2>
+          <span className="trending-badge">🔥 Trending</span>
         </div>
         <hr className="feed-section-divider" />
         <div className="recipe-feed-layout">
@@ -40,8 +40,8 @@ export default function RecipeFeed() {
   return (
 	<div className="recipe-feed-container">
       <div className="feed-header-block">
-        <h2 className="feed-section-title">Trending Recipes</h2>
-        <span className="trending-badge">🔥 Community Hotlist</span>
+        <h2 className="feed-section-title">Recipe Feed</h2>
+        <span className="trending-badge">🔥Trending</span>
       </div>
       
       <hr className="feed-section-divider" />

@@ -171,7 +171,6 @@ export function UserProfile() {
                           🔥
                         </button>
                       </div>
-                      <div className="list-arrow">🗡️</div>
                     </div>
                   </Link>
                 ))

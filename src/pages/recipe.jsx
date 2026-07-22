@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router'
-import { useGetRecipe } from '../api/recipes.js'
+import { useGetRecipe, likeRecipe } from '../api/recipes.js'
 import { useGetShoppingLists, postAddRecipeToList } from '../api/shoppingLists.js'
 import { useAuth } from '../components/auth.jsx'
 import formatDate from '../utility/format.js'
@@ -13,6 +13,8 @@ export default function Recipe() {
 
 	/* Get recipe data */
 	const { data, error, isLoading } = useGetRecipe(params.id)
+
+    const recipe = data?.recipes[0]
 
 	/* Get shopping lists for adding */
 	const { data: listData, error: listError } = useGetShoppingLists(user)
@@ -57,18 +59,24 @@ export default function Recipe() {
 		}
 	}
 
+    const handleLikeRecipe = async () => {
+
+      let { ok, message } = await likeRecipe(params.id)
+
+    }
+
 	return (
     <>
       <div className="recipe-view parchment-scroll">
-        <img src={data.image_url} className="recipe-hero-image" alt={data.title} />
+        <img src={recipe.image_url} className="recipe-hero-image" alt={recipe.title} />
         
-        <h2>{data.title}</h2>
+        <h2>{recipe.title}</h2>
         <hr />	
 
         <div className="recipe-meta">
-          <strong>Scribe:</strong> {data.author} <br />
-          <strong>Penned:</strong> {formatDate(data.created_at)} <br />
-          <strong>Amended:</strong> {formatDate(data.updated_at)} <br />
+          <strong>Scribe:</strong> {recipe.author} <br />
+          <strong>Penned:</strong> {formatDate(recipe.created_at)} <br />
+          <strong>Amended:</strong> {formatDate(recipe.updated_at)} <br />
           <button 
             type="button" 
             className="open-add-modal-btn"
@@ -76,14 +84,21 @@ export default function Recipe() {
           >
             ＋ Add to Shopping List
           </button>
+          <button
+            type="button"
+            className="open-add-modal-btn"
+            onClick={() => handleLikeRecipe()}
+          >
+            Like
+          </button>
         </div>
 
-        <div className="recipe-text-block">{data.description}</div>
+        <div className="recipe-text-block">{recipe.description}</div>
 
         <h3>Ingredients</h3>
         <hr />
         <ul className="ingredients-section">
-          {data.ingredients?.map(ing => (
+          {recipe.ingredients?.map(ing => (
             <li key={ing.name}>
               <span className="ing-name">{ing.name}</span>
               <span className="ing-count">{ing.quantity} {ing.unit}</span>
@@ -93,7 +108,7 @@ export default function Recipe() {
 
         <h3>Instructions</h3>
         <hr />
-        <div className="recipe-text-block">{data.instructions}</div>
+        <div className="recipe-text-block">{recipe.instructions}</div>
       </div>
 
       {showAddModal && (

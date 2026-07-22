@@ -114,3 +114,18 @@ export async function deleteRecipe(id) {
 		return { ok: false, message: error }
 	}
 }
+
+// Like recipe
+export async function likeRecipe(id) {
+  try {
+    const response = await authFetcher(`${API_BASE}/api/recipes/${id}/likes`, {
+      method: "PUT",
+    })
+
+    return { ok: true, message: null }
+  } catch (error) {
+    console.Error("PUT REQUEST ERROR:", error)
+    return { ok: false, message: error }
+  }
+}
+

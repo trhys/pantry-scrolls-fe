@@ -17,23 +17,23 @@ export default function Home() {
         {user ? (
           <>
             <h2>Hail, {user.name}!</h2>
-            <p>Explore the realm's most popular recipes, delve into our grand archive, or perhaps scribe your own culinary creations</p>
+            <p>Ready to scribe a new scroll, or perhaps preparing your next shopping quest?</p>
             <div className="home-actions">
               <Link to="/recipe-creator" className="home-btn primary-action">
                 📜 Scribe Recipe
               </Link>
               <Link to="/shopping-lists" className="home-btn secondary-action">
-                ⚔️ Shopping Lists 
+                ⚔️ Shopping Lists
               </Link>
             </div>
           </>
         ) : (
           <>
             <h2>Welcome to Pantry Scrolls</h2>
-            <p>Step inside our grand culinary archive to create your own recipe scrolls, and organize the provisions for your house.</p>
+            <p>We are collecting recipes for our Grand Archive and sharing them with the world. You can explore the guild's most popular scrolls, delve into the Grand Archive, or perhaps share your own culinary creations!</p>
             <div className="home-actions">
-              <Link to="/login" className="home-btn primary-action">
-                Enter the Archive
+              <Link to="/signup" className="home-btn primary-action">
+               Join the Guild 
               </Link>
             </div>
           </>
@@ -41,9 +41,7 @@ export default function Home() {
       </div>
 
       <p className="app-description">
-        Scribe your culinary creations, count up your required ingredients, and make your shopping plan painless.
-        Essential equipment for any great quartermaster, your shopping list creator will compile an attractive and
-        convenient ledger of the ingredients required for all your recipes.
+        As a Pantry Scrolls guild member, you can share any recipe from your favorite drink to complex casseroles, and anything between. Any shared recipe can be put in your shopping list for convenient planning and shopping.
       </p>
 
       <RecipeFeed />
