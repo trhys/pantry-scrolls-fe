@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useExploreFeed } from '../api/recipes.js'
+import LikeButton from '../components/LikeButton.jsx'
 import './explore.css'
 
 export default function Explore() {
@@ -43,7 +44,11 @@ export default function Explore() {
             <div className="recipe-card-media">
               <img src={recipe.image_url} alt={recipe.title} className="avatar-image-src" />
               <div className="recipe-card-overlay">
-                <span className="recipe-likes-badge">❤️ </span>
+                <LikeButton
+                  recipeId={recipe.id}
+                  initialLiked={recipe.liked ?? false}
+                  initialCount={recipe.likes ?? 0}
+                />
               </div>
             </div>
 

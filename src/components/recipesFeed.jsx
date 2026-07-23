@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { useGetRecipeFeed } from '../api/recipes.js'
+import LikeButton from './LikeButton.jsx'
 import formatDate from '../utility/format.js'
 
 export default function RecipeFeed() {
@@ -57,6 +58,13 @@ export default function RecipeFeed() {
                   className="avatar-image-src"
                 />
                 <div className="feed-card-image-blur-layer"></div>
+                <div className="feed-card-like-overlay">
+                  <LikeButton
+                    recipeId={featuredRecipe.id}
+                    initialLiked={featuredRecipe.liked ?? false}
+                    initialCount={featuredRecipe.likes ?? 0}
+                  />
+                </div>
               </div>
 
               <div className="feed-card-details">
@@ -87,6 +95,13 @@ export default function RecipeFeed() {
                       className="avatar-image-src"
                     />
                     <div className="feed-card-image-blur-layer"></div>
+                    <div className="feed-card-like-overlay">
+                      <LikeButton
+                        recipeId={recipe.id}
+                        initialLiked={recipe.liked ?? false}
+                        initialCount={recipe.likes ?? 0}
+                      />
+                    </div>
                   </div>
 
                   <div className="feed-card-details compact-card-details">

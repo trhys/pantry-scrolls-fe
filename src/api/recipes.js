@@ -115,7 +115,20 @@ export async function deleteRecipe(id) {
 	}
 }
 
-// Like recipe
+// Check whether the logged-in user has liked a recipe. Returns { liked: bool }
+export async function getLiked(id) {
+  try {
+    const response = await authFetcher(`${API_BASE}/api/recipes/${id}/likes/check`, {
+      method: "GET",
+    })
+    return { liked: response?.liked ?? false }
+  } catch (error) {
+    console.error("GET LIKED ERROR:", error)
+    return { liked: false }
+  }
+}
+
+// Like / unlike recipe (toggle). Returns { ok, message }
 export async function likeRecipe(id) {
   try {
     const response = await authFetcher(`${API_BASE}/api/recipes/${id}/likes`, {
@@ -124,7 +137,7 @@ export async function likeRecipe(id) {
 
     return { ok: true, message: null }
   } catch (error) {
-    console.Error("PUT REQUEST ERROR:", error)
+    console.error("PUT REQUEST ERROR:", error)
     return { ok: false, message: error }
   }
 }

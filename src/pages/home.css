@@ -299,3 +299,11 @@
   color: rgba(242, 245, 232, 0.8);
   text-align: center;
 }
+
+/* Like button overlay inside feed card image wrap */
+.feed-card-like-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+}

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router'
-import { useGetRecipe, likeRecipe } from '../api/recipes.js'
+import { useGetRecipe } from '../api/recipes.js'
 import { useGetShoppingLists, postAddRecipeToList } from '../api/shoppingLists.js'
 import { useAuth } from '../components/auth.jsx'
+import LikeButton from '../components/LikeButton.jsx'
 import formatDate from '../utility/format.js'
 import './recipe.css'
 
@@ -19,7 +20,6 @@ export default function Recipe() {
 	/* Get shopping lists for adding */
 	const { data: listData, error: listError } = useGetShoppingLists(user)
 
-	/* State */
 	const [showAddModal, setShowAddModal] = useState(false)
 	const [selectedList, setSelectedList] = useState('')
 	const [selectedQuantity, setSelectedQuantity] = useState(1)
@@ -59,18 +59,20 @@ export default function Recipe() {
 		}
 	}
 
-    const handleLikeRecipe = async () => {
-
-      let { ok, message } = await likeRecipe(params.id)
-
-    }
-
 	return (
     <>
       <div className="recipe-view parchment-scroll">
         <img src={recipe.image_url} className="recipe-hero-image" alt={recipe.title} />
         
-        <h2>{recipe.title}</h2>
+        <div className="recipe-title-row">
+          <h2>{recipe.title}</h2>
+          <LikeButton
+            recipeId={params.id}
+            initialLiked={recipe.liked ?? false}
+            initialCount={recipe.likes ?? 0}
+            onAuthRequired={() => setShowAddModal(true)}
+          />
+        </div>
         <hr />	
 
         <div className="recipe-meta">
@@ -83,13 +85,6 @@ export default function Recipe() {
             onClick={() => setShowAddModal(true)}
           >
             ＋ Add to Shopping List
-          </button>
-          <button
-            type="button"
-            className="open-add-modal-btn"
-            onClick={() => handleLikeRecipe()}
-          >
-            Like
           </button>
         </div>
 
