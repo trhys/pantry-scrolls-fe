@@ -4,22 +4,28 @@ import { authFetcher } from './auth.js'
 const API_BASE = import.meta.env.VITE_API_URL
 
 const fetcher = (url) => fetch(url).then(res => res.json());
+const optionalAuthFetcher = async (url) => {
+	try {
+		return await authFetcher(url, { method: "GET" })
+	} catch {
+		return fetcher(url)
+	}
+}
 
 // Get recipe feed
 export function useGetRecipeFeed() {
-	const { data, error, isLoading } = useSWR(`${API_BASE}/api/recipes`, fetcher)
+	const { data, error, isLoading } = useSWR(`${API_BASE}/api/recipes`, optionalAuthFetcher)
 	return { data, error, isLoading }
 }
 
 // Get explorer feed with query
 export function useExploreFeed(query) {
-  if (query != "") {
-    const { data, error, isLoading, mutate } = useSWR(`${API_BASE}/api/recipes/explore?search=${query}`, fetcher)
-    return { data, error, isLoading, mutate }
-  } else {
-    const { data, error, isLoading, mutate } = useSWR(`${API_BASE}/api/recipes`, fetcher)
-    return {data, error, isLoading, mutate }
-  }
+  const endpoint = query !== ""
+    ? `${API_BASE}/api/recipes/explore?search=${encodeURIComponent(query)}`
+    : `${API_BASE}/api/recipes`
+
+  const { data, error, isLoading, mutate } = useSWR(endpoint, optionalAuthFetcher)
+  return { data, error, isLoading, mutate }
 }
 
 // Get user's info for profile page
@@ -30,7 +36,7 @@ export function useGetUserProfile(id) {
 
 // Get individual recipe
 export function useGetRecipe(id) {
-	const { data, error, isLoading } = useSWR(id ? `${API_BASE}/api/recipes/${id}` : null, fetcher)
+	const { data, error, isLoading } = useSWR(id ? `${API_BASE}/api/recipes/${id}` : null, optionalAuthFetcher)
 	return { data, error, isLoading }
 }
 
@@ -89,7 +95,7 @@ export async function putRecipe(id, title, image, ingredients, description, inst
 
 		if (image && typeof image !== 'string') formData.append("image", image)
 
-		const data = await authFetcher(`${API_BASE}/api/recipes/${id}`, {
+		await authFetcher(`${API_BASE}/api/recipes/${id}`, {
 			method: "PUT",
 			body: formData,
 		})
@@ -104,7 +110,7 @@ export async function putRecipe(id, title, image, ingredients, description, inst
 // Delete recipe
 export async function deleteRecipe(id) {
 	try {
-		const data = await authFetcher(`${API_BASE}/api/recipes/${id}`, {
+		await authFetcher(`${API_BASE}/api/recipes/${id}`, {
 			method: "DELETE",
 		})
 
@@ -115,23 +121,10 @@ export async function deleteRecipe(id) {
 	}
 }
 
-// Check whether the logged-in user has liked a recipe. Returns { liked: bool }
-export async function getLiked(id) {
-  try {
-    const response = await authFetcher(`${API_BASE}/api/recipes/${id}/likes/check`, {
-      method: "GET",
-    })
-    return { liked: response?.liked ?? false }
-  } catch (error) {
-    console.error("GET LIKED ERROR:", error)
-    return { liked: false }
-  }
-}
-
 // Like / unlike recipe (toggle). Returns { ok, message }
 export async function likeRecipe(id) {
   try {
-    const response = await authFetcher(`${API_BASE}/api/recipes/${id}/likes`, {
+    await authFetcher(`${API_BASE}/api/recipes/${id}/likes`, {
       method: "PUT",
     })
 
@@ -141,4 +134,3 @@ export async function likeRecipe(id) {
     return { ok: false, message: error }
   }
 }
-
