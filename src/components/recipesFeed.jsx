@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { useGetRecipeFeed } from '../api/recipes.js'
+import LikeButton from './LikeButton.jsx'
 import formatDate from '../utility/format.js'
 
 export default function RecipeFeed() {
@@ -10,8 +11,8 @@ export default function RecipeFeed() {
 	if (isLoading) return (
       <div className="recipe-feed-container">
         <div className="feed-header-block">
-          <h2 className="feed-section-title">Trending Recipes</h2>
-          <span className="trending-badge">🔥 Community Hotlist</span>
+          <h2 className="feed-section-title">Recipe Feed</h2>
+          <span className="trending-badge">🔥 Trending</span>
         </div>
         <hr className="feed-section-divider" />
         <div className="recipe-feed-layout">
@@ -40,8 +41,8 @@ export default function RecipeFeed() {
   return (
 	<div className="recipe-feed-container">
       <div className="feed-header-block">
-        <h2 className="feed-section-title">Trending Recipes</h2>
-        <span className="trending-badge">🔥 Community Hotlist</span>
+        <h2 className="feed-section-title">Recipe Feed</h2>
+        <span className="trending-badge">🔥Trending</span>
       </div>
       
       <hr className="feed-section-divider" />
@@ -57,6 +58,13 @@ export default function RecipeFeed() {
                   className="avatar-image-src"
                 />
                 <div className="feed-card-image-blur-layer"></div>
+                <div className="feed-card-like-overlay">
+                  <LikeButton
+                    recipeId={featuredRecipe.id}
+                    initialLiked={featuredRecipe.liked ?? false}
+                    initialCount={featuredRecipe.likes ?? 0}
+                  />
+                </div>
               </div>
 
               <div className="feed-card-details">
@@ -96,6 +104,8 @@ export default function RecipeFeed() {
                       <span className="feed-author">By {recipe.author}</span>
                       <span className="meta-bullet">•</span>
                       <span className="feed-date">{formatDate(recipe.created_at)}</span>
+                      <span className="meta-bullet"> • Likes:</span>
+                      <span className="feed-date">{recipe.likes}</span>
                     </div>
 
                     <div className="feed-card-action">

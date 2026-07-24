@@ -1,13 +1,14 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../components/auth.jsx' 
 import { useGetUserProfile, updateSetUserAvatar } from '../api/users.js'  
 import { useGetShoppingLists } from '../api/shoppingLists.js'
 import { deleteRecipe } from '../api/recipes.js'
-import { Link } from 'react-router'
 import './user.css'
 
 export function UserProfile() {
     const { user } = useAuth()
+	const { navigate } = useNavigate()
     const { data: userData, error, isLoading: userLoading, mutate } = useGetUserProfile(user.id)
 
     const [image, setImage] = useState(null)
@@ -149,9 +150,21 @@ export function UserProfile() {
                 <p className="empty-section-text">You haven't scribed any recipe scrolls yet.</p>
               ) : (
                 userData.recipes.map(recipe => (
-                  <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="profile-recipe-item">
-                    <img src={recipe.image_url} alt={recipe.title} />
-                    <div className="profile-recipe-details flex-grow">
+                  <div
+                      className="profile-recipe-item"
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => navigate(`/recipes/${recipe.id}`)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          navigate(`/recipes/${recipe.id}`);
+                        }
+                      }}
+                      key={recipe.id}
+                    >
+                  <img src={recipe.image_url} alt={recipe.title} />
+                  <div className="profile-recipe-details flex-grow">
                       <h4>{recipe.title}</h4>
                     </div>
                     
@@ -171,9 +184,8 @@ export function UserProfile() {
                           🔥
                         </button>
                       </div>
-                      <div className="list-arrow">🗡️</div>
                     </div>
-                  </Link>
+                  </div>
                 ))
               )}
             </div>
