@@ -48,7 +48,7 @@ export function RecipeCreator() {
 	
 	/* Get existing recipe data if in editor mode */
 	const { data: editorData, error: editorError, isLoading: editorLoading } = useGetRecipe(params.id)
-    const recipeData = editorData?.recipes[0]
+    const recipeData = editorData?.recipes?.[0]
   
 	/* Here we'll useEffect to set all the state if we are editing */
 	useEffect(() => {
