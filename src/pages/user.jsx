@@ -1,13 +1,14 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../components/auth.jsx' 
 import { useGetUserProfile, updateSetUserAvatar } from '../api/users.js'  
 import { useGetShoppingLists } from '../api/shoppingLists.js'
 import { deleteRecipe } from '../api/recipes.js'
-import { Link } from 'react-router'
 import './user.css'
 
 export function UserProfile() {
     const { user } = useAuth()
+	const { navigate } = useNavigate()
     const { data: userData, error, isLoading: userLoading, mutate } = useGetUserProfile(user.id)
 
     const [image, setImage] = useState(null)
