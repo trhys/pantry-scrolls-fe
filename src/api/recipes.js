@@ -7,7 +7,12 @@ const fetcher = (url) => fetch(url).then(res => res.json());
 const optionalAuthFetcher = async (url) => {
 	try {
 		return await authFetcher(url, { method: "GET" })
-	} catch {
+	} catch (error) {
+		// Only fall back to unauthenticated fetch for auth/credential failures.
+		const msg = String(error?.message ?? '').toLowerCase()
+		if (!msg.includes('auth') && !msg.includes('credential') && !msg.includes('expired')) {
+			throw error
+		}
 		return fetcher(url)
 	}
 }
