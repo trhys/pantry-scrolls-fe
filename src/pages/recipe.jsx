@@ -15,7 +15,7 @@ export default function Recipe() {
 	/* Get recipe data */
 	const { data, error, isLoading } = useGetRecipe(params.id)
 
-    const recipe = data?.recipes[0]
+  const recipe = data?.recipes?.[0]
 
 	/* Get shopping lists for adding */
 	const { data: listData, error: listError } = useGetShoppingLists(user)
