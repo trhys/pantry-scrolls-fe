@@ -149,9 +149,21 @@ export function UserProfile() {
                 <p className="empty-section-text">You haven't scribed any recipe scrolls yet.</p>
               ) : (
                 userData.recipes.map(recipe => (
-                  <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="profile-recipe-item">
-                    <img src={recipe.image_url} alt={recipe.title} />
-                    <div className="profile-recipe-details flex-grow">
+                  <div
+                      className="profile-recipe-item"
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => navigate(`/recipes/${recipe.id}`)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          navigate(`/recipes/${recipe.id}`);
+                        }
+                      }}
+                      key={recipe.id}
+                    >
+                  <img src={recipe.image_url} alt={recipe.title} />
+                  <div className="profile-recipe-details flex-grow">
                       <h4>{recipe.title}</h4>
                     </div>
                     
@@ -172,7 +184,7 @@ export function UserProfile() {
                         </button>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))
               )}
             </div>

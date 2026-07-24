@@ -95,13 +95,6 @@ export default function RecipeFeed() {
                       className="avatar-image-src"
                     />
                     <div className="feed-card-image-blur-layer"></div>
-                    <div className="feed-card-like-overlay">
-                      <LikeButton
-                        recipeId={recipe.id}
-                        initialLiked={recipe.liked ?? false}
-                        initialCount={recipe.likes ?? 0}
-                      />
-                    </div>
                   </div>
 
                   <div className="feed-card-details compact-card-details">
@@ -111,6 +104,8 @@ export default function RecipeFeed() {
                       <span className="feed-author">By {recipe.author}</span>
                       <span className="meta-bullet">•</span>
                       <span className="feed-date">{formatDate(recipe.created_at)}</span>
+                      <span className="meta-bullet"> • Likes:</span>
+                      <span className="feed-date">{recipe.likes}</span>
                     </div>
 
                     <div className="feed-card-action">
