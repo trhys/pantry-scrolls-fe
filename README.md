@@ -155,7 +155,7 @@ const { data, error, isLoading } = useGetIngredients()
 
 ---
 
-#### `GET /api/ingredients/:id/units` — Units for Ingredient (SWR hook)
+#### `GET /api/ingredients/units?id=<ingredientId>` — Units for Ingredient (SWR hook)
 
 ```js
 import { useGetUnits } from './src/api/recipes.js'
