@@ -290,4 +290,14 @@
   .ing-count {
     color: #78350f;
   }
+
+  @page {
+    size: auto;      /* or letter / A4 */
+    margin: 0mm;    /* customize margins */
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
