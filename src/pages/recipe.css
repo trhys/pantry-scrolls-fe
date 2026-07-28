@@ -223,3 +223,81 @@
   background-color: rgba(92, 64, 51, 0.2);
   color: var(--color-parchment-text);
 }
+
+/* PRINT STYLES */
+@media print {
+  .tavern-banner,
+  .footer-keep,
+  .modal-overlay,
+  .open-add-modal-btn {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #1c120c;
+    font-size: 12pt;
+  }
+
+  .parchment-scroll {
+    background: #fff;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .recipe-view {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .recipe-hero-image {
+    max-height: 240px;
+    filter: none;
+  }
+
+  .recipe-view h2 {
+    font-size: 1.8rem;
+    color: #1c120c;
+  }
+
+  .recipe-view h3 {
+    font-size: 1.2rem;
+    color: #2b1d11;
+    margin-top: 16pt;
+  }
+
+  .recipe-meta {
+    border-left: 3px solid #78350f;
+    background: transparent;
+    color: #5c4331;
+    font-size: 10pt;
+  }
+
+  .recipe-text-block {
+    font-size: 11pt;
+    color: #2b1d11;
+  }
+
+  .ingredients-section li {
+    border-bottom: 1px dashed #ccc;
+  }
+
+  .ing-name {
+    color: #1c120c;
+  }
+
+  .ing-count {
+    color: #78350f;
+  }
+
+  @page {
+    size: auto;      /* or letter / A4 */
+    margin: 0mm;    /* customize margins */
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

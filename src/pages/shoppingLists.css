@@ -150,3 +150,69 @@
 .danger-btn:hover {
   background-color: #b91c1c;
 }
+
+/* PRINT STYLES */
+@media print {
+  .tavern-banner,
+  .footer-keep,
+  .modal-overlay,
+  .add-list-btn,
+  .delete-list-btn,
+  .list-arrow {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #1c120c;
+    font-size: 12pt;
+  }
+
+  .parchment-scroll {
+    background: #fff;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .single-list-container {
+    padding: 0;
+  }
+
+  .list-navigation .back-link {
+    display: none;
+  }
+
+  .list-navigation h1 {
+    font-size: 1.8rem;
+    color: #1c120c;
+    margin-bottom: 16pt;
+  }
+
+  .list-layout-grid {
+    display: block;
+  }
+
+  .checklist-section {
+    page-break-inside: avoid;
+  }
+
+  .linked-recipes-section {
+    margin-top: 24pt;
+    page-break-inside: avoid;
+  }
+
+  .checklist-item {
+    border-bottom: 1px dashed #ccc;
+    padding: 6pt 0;
+    color: #1c120c;
+  }
+
+  .item-name {
+    color: #1c120c;
+  }
+
+  .item-amount {
+    color: #78350f;
+  }
+}

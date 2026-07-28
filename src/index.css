@@ -262,6 +262,110 @@ body {
   color: #b91c1c;
 }
 
+/* MOBILE NAV TOGGLE */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--color-border-wood);
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 60;
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-parchment-text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #0a0704;
+  border-top: 1px solid var(--color-border-wood);
+  border-bottom: 2px solid var(--color-border-wood);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+  z-index: 55;
+  padding: 8px 0;
+}
+
+.mobile-nav-dropdown a,
+.mobile-nav-dropdown .mobile-nav-logout {
+  font-family: 'MedievalSharp', cursive;
+  color: var(--color-parchment-text);
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 14px 24px;
+  display: block;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.mobile-nav-dropdown a:hover,
+.mobile-nav-dropdown a.active,
+.mobile-nav-dropdown .mobile-nav-logout:hover {
+  background-color: rgba(92, 64, 51, 0.3);
+  color: var(--color-gold-accent);
+}
+
+.mobile-nav-dropdown .mobile-nav-logout {
+  color: #b91c1c;
+}
+
+.mobile-nav-dropdown hr {
+  border: 0;
+  border-top: 1px solid rgba(92, 64, 51, 0.4);
+  margin: 6px 0;
+}
+
+@media (max-width: 767px) {
+  .tavern-banner {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+  }
+
+  .tavern-links {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .mobile-nav-dropdown {
+    display: flex;
+  }
+}
+
 /* FOOTER STYLES */
 .app-footer {
   padding: 40px 24px 20px 24px;
