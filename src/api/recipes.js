@@ -53,7 +53,10 @@ export function useGetIngredients() {
 
 // Get ingredient units for recipe creator
 export function useGetUnits(id) {
-	const { data, error, isLoading } = useSWR(`${API_BASE}/api/ingredients/${id}/units`, fetcher)
+	const endpoint = id
+		? `${API_BASE}/api/ingredients/units?id=${encodeURIComponent(id)}`
+		: null
+	const { data, error, isLoading } = useSWR(endpoint, fetcher)
 	return { data, error, isLoading }
 }
 
