@@ -487,3 +487,45 @@ body {
     0 10px 20px rgba(0, 0, 0, 0.4);
   color: #2b1d11;
 }
+
+/* TIP CALLOUT — shared across pages */
+.tip-callout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background-color: rgba(197, 160, 89, 0.08);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-left: 3px solid var(--color-gold-accent);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: rgba(242, 245, 232, 0.8);
+}
+
+.tip-callout-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-callout-body {
+  flex: 1;
+}
+
+.tip-callout-title {
+  display: block;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.85rem;
+  color: var(--color-gold-accent);
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+
+/* Hide tip callouts when printing */
+@media print {
+  .tip-callout {
+    display: none !important;
+  }
+}

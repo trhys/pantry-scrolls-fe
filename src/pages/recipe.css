@@ -224,6 +224,18 @@
   color: var(--color-parchment-text);
 }
 
+/* Print tip on parchment background */
+.recipe-view .tip-callout {
+  background-color: rgba(120, 53, 15, 0.07);
+  border-color: rgba(120, 53, 15, 0.4);
+  border-left-color: #78350f;
+  color: #5c4331;
+}
+
+.recipe-view .tip-callout .tip-callout-title {
+  color: #78350f;
+}
+
 /* PRINT STYLES */
 @media print {
   .tavern-banner,

@@ -88,6 +88,16 @@ export default function Recipe() {
           </button>
         </div>
 
+        <div className="tip-callout">
+          <span className="tip-callout-icon">🖨️</span>
+          <div className="tip-callout-body">
+            <span className="tip-callout-title">Printing this Scroll</span>
+            For the best parchment results, open your browser&apos;s Print dialog and enable
+            {' '}<strong>Background graphics</strong>, set <strong>Margins</strong> to Minimum,
+            and choose <strong>Portrait</strong> orientation.
+          </div>
+        </div>
+
         <div className="recipe-text-block">{recipe.description}</div>
 
         <h3>Ingredients</h3>
