@@ -151,7 +151,7 @@ export function RecipeCreator() {
     <form onSubmit={handleSubmit} className="creator-workspace parchment-scroll">
 
       {!editor && (
-        <div className="tip-callout creator-tip-callout">
+        <div className="tip-callout">
           <span className="tip-callout-icon">📖</span>
           <div className="tip-callout-body">
             <span className="tip-callout-title">Scribing a New Recipe</span>

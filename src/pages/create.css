@@ -212,22 +212,13 @@ input.recipe-title-input:focus {
   transform: scale(0.98);
 }
 
-/* Form help callout — appears on parchment-scroll background */
-.tip-callout.creator-tip-callout {
-  background-color: var(--color-panel-bg); 
-  border-color: rgba(92, 64, 51, 0.4);      
-  border-left-color: var(--color-gold-accent); 
-  color: var(--color-parchment-text);       
-  backdrop-filter: blur(4px);               
+.creator-workspace .tip-callout {
+  background-color: rgba(120, 53, 15, 0.07);
+  border-color: rgba(120, 53, 15, 0.4);
+  border-left-color: #78350f;
+  color: #5c4331;
 }
 
-.tip-callout.creator-tip-callout .tip-callout-title {
-  color: var(--color-gold-accent);          
-  font-family: 'MedievalSharp', cursive;
-  font-weight: bold;
-}
-
-.tip-callout.creator-tip-callout strong {
-  color: #ffffff;               
-  text-shadow: 0 0 4px rgba(197, 160, 89, 0.2);
+.creator-workspace .tip-callout .tip-callout-title {
+  color: #78350f;
 }
