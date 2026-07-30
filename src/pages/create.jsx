@@ -149,7 +149,21 @@ export function RecipeCreator() {
 
 	return (
     <form onSubmit={handleSubmit} className="creator-workspace parchment-scroll">
-      
+
+      {!editor && (
+        <div className="tip-callout">
+          <span className="tip-callout-icon">📖</span>
+          <div className="tip-callout-body">
+            <span className="tip-callout-title">Scribing a New Recipe</span>
+            Fill in a <strong>title</strong>, upload an <strong>illustration</strong> (JPG or PNG),
+            then add each <strong>ingredient</strong> with its quantity and unit. Use the{' '}
+            <strong>Description</strong> field for context or flavour notes, and{' '}
+            <strong>Instructions</strong> for step-by-step preparation. When ready, press{' '}
+            <em>📜 Scribe</em> to publish your scroll.
+          </div>
+        </div>
+      )}
+
       <input
         className="recipe-title-input"
         type="text"

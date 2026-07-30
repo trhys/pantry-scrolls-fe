@@ -151,6 +151,52 @@
   background-color: #b91c1c;
 }
 
+/* Print tip on parchment background */
+.checklist-section .tip-callout {
+  background-color: rgba(120, 53, 15, 0.07);
+  border-color: rgba(120, 53, 15, 0.4);
+  border-left-color: #78350f;
+  color: #5c4331;
+}
+
+.checklist-section .tip-callout .tip-callout-title {
+  color: #78350f;
+}
+
+/* EMPTY STATE */
+.empty-lists-callout {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 48px 24px;
+  border: 2px dashed rgba(197, 160, 89, 0.3);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.empty-lists-icon {
+  font-size: 3rem;
+  opacity: 0.7;
+}
+
+.empty-lists-callout h3 {
+  font-family: 'MedievalSharp', cursive;
+  color: var(--color-gold-accent);
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.empty-lists-callout p {
+  color: rgba(242, 245, 232, 0.65);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0;
+}
+
 /* PRINT STYLES */
 @media print {
   .tavern-banner,

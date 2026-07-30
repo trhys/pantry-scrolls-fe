@@ -88,6 +88,15 @@ export default function Recipe() {
           </button>
         </div>
 
+        <div className="tip-callout">
+          <span className="tip-callout-icon">🖨️</span>
+          <div className="tip-callout-body">
+            <span className="tip-callout-title">Printing tip:</span>
+            For best results, disable header/footers in print dialogue
+            and choose <strong>Portrait</strong> orientation.
+          </div>
+        </div>
+
         <div className="recipe-text-block">{recipe.description}</div>
 
         <h3>Ingredients</h3>
