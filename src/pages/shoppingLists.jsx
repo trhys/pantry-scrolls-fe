@@ -79,8 +79,8 @@ export function ShoppingListsPage() {
           {data?.shopping_lists?.length === 0 || !data?.shopping_lists ? (
             <div className="empty-lists-callout">
               <span className="empty-lists-icon">📜</span>
-              <h3>Your archives are empty</h3>
-              <p>No shopping lists have been scribed yet. Begin by creating your first list to organise recipes for your next feast.</p>
+              <h3>Your ledgers are empty</h3>
+              <p>No shopping lists have been created yet. Begin by creating your first list to organise recipes for your next feast.</p>
               <button className="add-list-btn" onClick={() => setCreateModal(true)}>
                 ✦ Scribe Your First List
               </button>
