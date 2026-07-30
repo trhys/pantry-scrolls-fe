@@ -76,26 +76,37 @@ export function ShoppingListsPage() {
         </header>
 
         <div className="lists-grid">
-          {data?.shopping_lists?.map(list => (
-            <Link to={`/shopping-lists/${list.id}`} key={list.id} className="list-card parchment-scroll">
-              <div className="list-info">
-                <h3>{list.name}</h3>
-                <p>Last amended {formatDate(list.updated_at)}</p>
-              </div>
+          {data?.shopping_lists?.length === 0 || !data?.shopping_lists ? (
+            <div className="empty-lists-callout">
+              <span className="empty-lists-icon">📜</span>
+              <h3>Your ledgers are empty</h3>
+              <p>No shopping lists have been created yet. Begin by creating your first list to organise recipes for your next feast.</p>
+              <button className="add-list-btn" onClick={() => setCreateModal(true)}>
+                ✦ Scribe Your First List
+              </button>
+            </div>
+          ) : (
+            data.shopping_lists.map(list => (
+              <Link to={`/shopping-lists/${list.id}`} key={list.id} className="list-card parchment-scroll">
+                <div className="list-info">
+                  <h3>{list.name}</h3>
+                  <p>Last amended {formatDate(list.updated_at)}</p>
+                </div>
 
-              <div className="list-actions-wrapper">
-                <button 
-                  type="button" 
-                  className="delete-list-btn"
-                  onClick={(e) => triggerDelete(e, list.id)}
-                  title="Incinerate Ledger"
-                >
-                  🔥
-                </button>
-                <div className="list-arrow">🗡️</div>
-              </div>
-            </Link>
-          ))}
+                <div className="list-actions-wrapper">
+                  <button 
+                    type="button" 
+                    className="delete-list-btn"
+                    onClick={(e) => triggerDelete(e, list.id)}
+                    title="Incinerate Ledger"
+                  >
+                    🔥
+                  </button>
+                  <div className="list-arrow">🗡️</div>
+                </div>
+              </Link>
+            ))
+          )}
         </div>
       </div>
 	
@@ -193,6 +204,16 @@ export function ShoppingList() {
         <main className="checklist-section parchment-scroll">
           <h3>Checklist</h3>
           <hr />
+
+          <div className="tip-callout">
+            <span className="tip-callout-icon">🖨️</span>
+            <div className="tip-callout-body">
+              <span className="tip-callout-title">Printing this Ledger</span>
+              For a clean printout, open the Print dialog, enable{' '}
+              <strong>Background graphics</strong>, set <strong>Margins</strong> to Minimum,
+              and choose <strong>Portrait</strong> orientation.
+            </div>
+          </div>
           
           <ul className="checklist-items">
             {ingredients?.items?.map(item => (
