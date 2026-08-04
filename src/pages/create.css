@@ -267,6 +267,25 @@ input.recipe-title-input:focus {
   transform: scale(0.98);
 }
 
+.cancel-btn {
+  font-family: 'MedievalSharp', cursive;
+  background: none;
+  border: 1px solid rgba(92, 64, 51, 0.4);
+  color: #5c4331;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 12px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: rgba(92, 64, 51, 0.1);
+  color: #2b1d11;
+}
+
 .creator-workspace .tip-callout {
   background-color: rgba(120, 53, 15, 0.07);
   border-color: rgba(120, 53, 15, 0.4);

@@ -48,6 +48,7 @@ export function RecipeCreator() {
             initialDraft={initialDraft}
             availableIngredients={availableIngredients}
             onSubmit={handleSubmit}
+            onCancel={editor ? () => navigate(`/recipes/${params.id}`) : undefined}
             editor={editor}
         />
     )

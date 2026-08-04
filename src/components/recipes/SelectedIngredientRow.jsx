@@ -4,6 +4,9 @@ function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
     const { data, error, isLoading } = useGetUnits(ingredientId)
     if (error) console.log(error)
 
+    const loadedUnits = data?.units ?? []
+    const showCurrentUnit = isLoading && selectedUnit && !loadedUnits.some((u) => u.name === selectedUnit)
+
     return (
         <select
             value={selectedUnit}
@@ -11,7 +14,10 @@ function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
             disabled={isLoading || !ingredientId}
         >
             <option value="">{!ingredientId ? '...' : 'Select units'}</option>
-            {data?.units.map((opt) => (
+            {showCurrentUnit && (
+                <option key={selectedUnit} value={selectedUnit}>{selectedUnit}</option>
+            )}
+            {loadedUnits.map((opt) => (
                 <option key={opt.name} value={opt.name}>
                     {opt.name}
                 </option>

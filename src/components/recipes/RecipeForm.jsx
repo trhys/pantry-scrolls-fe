@@ -4,7 +4,7 @@ import IngredientPicker from './IngredientPicker.jsx'
 import SelectedIngredientsList from './SelectedIngredientsList.jsx'
 import '../../pages/create.css'
 
-export default function RecipeForm({ initialDraft, availableIngredients, onSubmit, editor }) {
+export default function RecipeForm({ initialDraft, availableIngredients, onSubmit, onCancel, editor }) {
     const { draft, dispatch } = useRecipeDraft(initialDraft)
 
     const selectedIngredientIds = new Set(draft.ingredients.map((row) => row.id))
@@ -131,6 +131,11 @@ export default function RecipeForm({ initialDraft, availableIngredients, onSubmi
             <button type="submit" className="forge-submit-btn">
                 {editor ? '⚔️ Amend' : '📜 Scribe'}
             </button>
+            {editor && onCancel && (
+                <button type="button" className="cancel-btn" onClick={onCancel}>
+                    ✕ Cancel
+                </button>
+            )}
         </form>
     )
 }
