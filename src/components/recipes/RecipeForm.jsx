@@ -109,6 +109,7 @@ export default function RecipeForm({ initialDraft, availableIngredients, onSubmi
                             dispatch({ type: 'UPDATE_INGREDIENT_UNIT', rowID, unit })
                         }
                         onRemove={(rowID) => dispatch({ type: 'REMOVE_INGREDIENT', rowID })}
+                        editorMode={editor}
                     />
                 </div>
                 <hr />
