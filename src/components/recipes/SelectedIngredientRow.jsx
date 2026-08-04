@@ -1,11 +1,5 @@
-import { useGetUnits } from '../../api/recipes.js'
-
-function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
-    const { data, error, isLoading } = useGetUnits(ingredientId)
-    if (error) console.log(error)
-
-    const loadedUnits = data?.units ?? []
-    const showCurrentUnit = isLoading && selectedUnit && !loadedUnits.some((u) => u.name === selectedUnit)
+function UnitSelect({ ingredientId, selectedUnit, units, isLoading, onSelect }) {
+    const showCurrentUnit = isLoading && selectedUnit && !units.some((u) => u.name === selectedUnit)
 
     return (
         <select
@@ -17,7 +11,7 @@ function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
             {showCurrentUnit && (
                 <option key={selectedUnit} value={selectedUnit}>{selectedUnit}</option>
             )}
-            {loadedUnits.map((opt) => (
+            {units.map((opt) => (
                 <option key={opt.name} value={opt.name}>
                     {opt.name}
                 </option>
@@ -26,7 +20,7 @@ function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
     )
 }
 
-export default function SelectedIngredientRow({ row, ingredientName, onQuantityChange, onUnitChange, onRemove }) {
+export default function SelectedIngredientRow({ row, ingredientName, units, unitsLoading, onQuantityChange, onUnitChange, onRemove }) {
     return (
         <div className="ingredient-row">
             <span className="ingredient-row-name">{ingredientName}</span>
@@ -41,9 +35,10 @@ export default function SelectedIngredientRow({ row, ingredientName, onQuantityC
             />
 
             <UnitSelect
-                key={`${row.rowID}-${row.id}`}
                 ingredientId={row.id}
                 selectedUnit={row.units}
+                units={units}
+                isLoading={unitsLoading}
                 onSelect={(unit) => onUnitChange(row.rowID, unit)}
             />
 
