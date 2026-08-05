@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { useAuth } from '../components/auth.jsx'
 import { useGetIngredients, useGetUnits, postRecipe, putRecipe, useGetRecipeEdit } from '../api/recipes.js'
 import './create.css'
 
@@ -39,7 +38,6 @@ function UnitSelect({ ingredientId, selectedUnit, onSelect, preloadedUnits = [] 
 }
 
 export function RecipeCreator() {
-	const { user, logout } = useAuth();
 	const navigate = useNavigate();
 
 	/* To enable an editor mode without writing a different component, I'm checking for a recipe id in the path.
@@ -52,8 +50,9 @@ export function RecipeCreator() {
 	const [title, setTitle] = useState('')
 	const [image, setImage] = useState(null)
 	const [preview, setPreview] = useState(null)
-	const [ingredients, setIngredients] = useState([{ rowID: Date.now(), id: '', quantity: 0, units: '' }])
+	const [ingredients, setIngredients] = useState([])
 	const [ingredientUnits, setIngredientUnits] = useState({})
+	const [ingredientSearch, setIngredientSearch] = useState('')
 	const [description, setDescription] = useState('')
 	const [instructions, setInstructions] = useState('')
     	
@@ -93,7 +92,7 @@ export function RecipeCreator() {
 			setInstructions('');
 			setImage(null);
 			setPreview(null);
-			setIngredients([{ rowID: Date.now(), id: '', quantity: 1, units: '' }]);
+			setIngredients([]);
 			setIngredientUnits({});
 		}
 	}, [editor, editorData])
@@ -113,10 +112,16 @@ export function RecipeCreator() {
 
 	async function handleSubmit(e) {
 		e.preventDefault()
+		const selectedIngredients = ingredients.filter((row) => Boolean(row.id))
+
+		if (selectedIngredients.length === 0) {
+			alert('Select at least one ingredient before scribing.')
+			return
+		}
 
 		let result = !editor 
-			? await postRecipe(title, image, ingredients, description, instructions)
-			: await putRecipe(params.id, title, image, ingredients, description, instructions)
+			? await postRecipe(title, image, selectedIngredients, description, instructions)
+			: await putRecipe(params.id, title, image, selectedIngredients, description, instructions)
 
 		let { id, ok, message } = result
 
@@ -124,10 +129,6 @@ export function RecipeCreator() {
 			if (editor) navigate(`/recipes/${params.id}`)
 			else navigate(`/recipes/${id}`)
 		} else alert(`Failed! ${message}`)
-	}
-
-	function handleSelectIngredient(rowID, id) {
-		setIngredients(ingredients.map(row => row.rowID === rowID ? {...row, id: id } : row))
 	}
 
 	function handleSelectQuantity(rowID, value) {
@@ -156,17 +157,25 @@ export function RecipeCreator() {
 		setPreview(objectUrl)
 	}
 
-	const addRow = (e) => {
-		e.preventDefault()
-		let rowID = Date.now()
-		setIngredients([...ingredients, { rowID: rowID, id: '', quantity: 0, units: '' }])
+	const toggleIngredient = (ingredientId, checked) => {
+		if (checked) {
+			if (ingredients.some((row) => row.id === ingredientId)) return
+			const nextRowId = ingredients.length ? Math.max(...ingredients.map((row) => row.rowID)) + 1 : 1
+			setIngredients([...ingredients, { rowID: nextRowId, id: ingredientId, quantity: 1, units: '' }])
+			return
+		}
+
+		setIngredients(ingredients.filter((row) => row.id !== ingredientId))
 	}
 
 	const removeRow = (rowID) => {
-	    if (ingredients.length > 1) {
-		    setIngredients(ingredients.filter((row) => row.rowID !== rowID))
-	    }
+		setIngredients(ingredients.filter((row) => row.rowID !== rowID))
 	}
+
+	const availableIngredients = ingredientData?.ingredients ?? []
+	const visibleIngredients = availableIngredients.filter((opt) =>
+		opt.name.toLowerCase().includes(ingredientSearch.toLowerCase())
+	)
 
 	return (
     <form onSubmit={handleSubmit} className="creator-workspace parchment-scroll">
@@ -221,20 +230,38 @@ export function RecipeCreator() {
         <hr />
         
         <div className="ingredients-stack">
+          <div className="ingredient-picker">
+            <input
+              type="text"
+              value={ingredientSearch}
+              onChange={(e) => setIngredientSearch(e.target.value)}
+              className="ingredient-search-input"
+              placeholder="Search ingredients..."
+              aria-label="Search ingredients"
+            />
+            <div className="ingredient-picker-options">
+              {visibleIngredients.map((opt) => (
+                <label key={opt.id} className="ingredient-picker-option">
+                  <input
+                    type="checkbox"
+                    checked={ingredients.some((row) => row.id === opt.id)}
+                    onChange={(e) => toggleIngredient(opt.id, e.target.checked)}
+                    disabled={ingredientIsLoading}
+                  />
+                  <span>{opt.name}</span>
+                </label>
+              ))}
+              {!ingredientIsLoading && visibleIngredients.length === 0 && (
+                <p className="ingredient-picker-empty">No ingredients found.</p>
+              )}
+            </div>
+          </div>
+
           {ingredients.map((row) => (
             <div key={row.rowID} className="ingredient-row">
-              <select
-                value={row.id}
-                onChange={e => handleSelectIngredient(row.rowID, e.target.value)}
-                disabled={ingredientIsLoading}
-              >
-                <option value="">{ingredientIsLoading ? 'Loading ingredients...' : 'Select an ingredient...'}</option>
-                {ingredientData?.ingredients.map((opt) => (
-                  <option key={opt.id} value={opt.id}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
+              <span className="ingredient-row-name">
+                {availableIngredients.find((opt) => opt.id === row.id)?.name ?? 'Unknown ingredient'}
+              </span>
 
               <input
                 type="number"
@@ -257,10 +284,6 @@ export function RecipeCreator() {
             </div>
           ))}
         </div>
-
-        <button className="add-btn-secondary" type="button" onClick={addRow}>
-          ＋ Add
-        </button>
         <hr />
       </div>
 
