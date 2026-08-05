@@ -45,6 +45,15 @@ export function useGetRecipe(id) {
 	return { data, error, isLoading }
 }
 
+// Get recipe editor payload with ingredient conversions for single-fetch hydration
+export function useGetRecipeEdit(id) {
+	const { data, error, isLoading } = useSWR(
+		id ? `${API_BASE}/api/recipes/${id}/edit` : null,
+		authFetcher
+	)
+	return { data, error, isLoading }
+}
+
 // Get ingredients for recipe creator
 export function useGetIngredients() {
 	const { data, error, isLoading } = useSWR(`${API_BASE}/api/ingredients`, fetcher)

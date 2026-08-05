@@ -113,6 +113,59 @@ input.recipe-title-input:focus {
   margin-bottom: 16px;
 }
 
+.ingredient-picker {
+  background-color: rgba(92, 64, 51, 0.04);
+  border: 1px solid rgba(92, 64, 51, 0.3);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.ingredient-search-input {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: rgba(92, 64, 51, 0.05);
+  border: 1px solid rgba(92, 64, 51, 0.4);
+  border-radius: 4px;
+  padding: 10px;
+  color: #1c120c;
+  font-family: 'Metamorphous', serif;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.ingredient-search-input:focus {
+  outline: none;
+  border-color: #78350f;
+  background-color: rgba(92, 64, 51, 0.08);
+}
+
+.ingredient-picker-options {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ingredient-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Metamorphous', serif;
+  color: #1c120c;
+}
+
+.ingredient-picker-option input[type="checkbox"] {
+  accent-color: #78350f;
+}
+
+.ingredient-picker-empty {
+  margin: 0;
+  color: #5c4331;
+  font-family: 'Metamorphous', serif;
+  font-size: 0.9rem;
+}
+
 .ingredient-row {
   display: flex;
   gap: 12px;
@@ -140,8 +193,10 @@ input.recipe-title-input:focus {
   background-color: rgba(92, 64, 51, 0.08);
 }
 
-.ingredient-row select {
+.ingredient-row-name {
   flex: 2;
+  font-family: 'Metamorphous', serif;
+  color: #2b1d11;
 }
 
 .ingredient-row input[type="number"] {
