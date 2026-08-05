@@ -1,21 +1,34 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { useAuth } from '../components/auth.jsx'
-import { useGetIngredients, useGetUnits, postRecipe, putRecipe, useGetRecipe } from '../api/recipes.js'
+import { useGetIngredients, useGetUnits, postRecipe, putRecipe, useGetRecipeEdit } from '../api/recipes.js'
 import './create.css'
 
-function UnitSelect({ ingredientId, selectedUnit, onSelect }) {
-    	const { data, error, isLoading } = useGetUnits(ingredientId);
+function getUnitOptionsFromConversions(selectedUnit, conversions = []) {
+	const names = new Set()
+	if (selectedUnit) names.add(selectedUnit)
+	for (const c of conversions) {
+		if (c?.from_unit) names.add(c.from_unit)
+		if (c?.to_unit) names.add(c.to_unit)
+	}
+	return Array.from(names).map((name) => ({ name }))
+}
+
+function UnitSelect({ ingredientId, selectedUnit, onSelect, preloadedUnits = [] }) {
+	const shouldFetch = preloadedUnits.length === 0 && Boolean(ingredientId)
+	const { data, error, isLoading } = useGetUnits(shouldFetch ? ingredientId : null)
 	if (error) console.log(error)
+
+	const units = preloadedUnits.length > 0 ? preloadedUnits : (data?.units ?? [])
 
     return (
         <select 
 	    value={selectedUnit} 
 	    onChange={(e) => onSelect(e.target.value)}
-	    disabled={isLoading || !ingredientId}>
+	    disabled={(shouldFetch && isLoading) || !ingredientId}>
 
             <option value="">{!ingredientId ? '...' : 'Select units'}</option>
-	    {data?.units.map((opt) => (
+	    {units.map((opt) => (
                 <option key={opt.name} value={opt.name}>
                     {opt.name}
                 </option>
@@ -40,6 +53,7 @@ export function RecipeCreator() {
 	const [image, setImage] = useState(null)
 	const [preview, setPreview] = useState(null)
 	const [ingredients, setIngredients] = useState([{ rowID: Date.now(), id: '', quantity: 0, units: '' }])
+	const [ingredientUnits, setIngredientUnits] = useState({})
 	const [description, setDescription] = useState('')
 	const [instructions, setInstructions] = useState('')
     	
@@ -47,7 +61,7 @@ export function RecipeCreator() {
 	const { data: ingredientData, error: ingredientError, isLoading: ingredientIsLoading } = useGetIngredients()
 	
 	/* Get existing recipe data if in editor mode */
-	const { data: editorData, error: editorError, isLoading: editorLoading } = useGetRecipe(params.id)
+	const { data: editorData, error: editorError, isLoading: editorLoading } = useGetRecipeEdit(editor ? params.id : null)
     const recipeData = editorData?.recipes?.[0]
   
 	/* Here we'll useEffect to set all the state if we are editing */
@@ -65,7 +79,13 @@ export function RecipeCreator() {
 					quantity: ing.quantity,
 					units: ing.unit
 				}))
-                        	setIngredients(loadedRows)
+				setIngredients(loadedRows)
+
+				const preloaded = {}
+				for (const ing of recipeData.ingredients) {
+					preloaded[ing.id] = getUnitOptionsFromConversions(ing.unit, ing.conversions)
+				}
+				setIngredientUnits(preloaded)
 			}
 		} else if (!editor) {
 			setTitle('');
@@ -74,6 +94,7 @@ export function RecipeCreator() {
 			setImage(null);
 			setPreview(null);
 			setIngredients([{ rowID: Date.now(), id: '', quantity: 1, units: '' }]);
+			setIngredientUnits({});
 		}
 	}, [editor, editorData])
 
@@ -228,6 +249,7 @@ export function RecipeCreator() {
                 key={`${row.rowID}-${row.id}`}
                 ingredientId={row.id}
                 selectedUnit={row.units}
+                preloadedUnits={ingredientUnits[row.id] ?? []}
                 onSelect={(unit) => handleSelectUnits(row.rowID, unit)}
               />
 
