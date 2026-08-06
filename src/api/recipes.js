@@ -23,14 +23,24 @@ export function useGetRecipeFeed() {
 	return { data, error, isLoading }
 }
 
-// Get explorer feed with query
-export function useExploreFeed(query) {
-  const endpoint = query !== ""
-    ? `${API_BASE}/api/recipes/explore?search=${encodeURIComponent(query)}`
-    : `${API_BASE}/api/recipes`
+// Get explorer feed with filters
+export function useExploreFeed(filters = {}) {
+	const params = new URLSearchParams()
+	const title = filters.title?.trim()
+	const author = filters.author?.trim()
+	const tag = filters.tag?.trim()
 
-  const { data, error, isLoading, mutate } = useSWR(endpoint, optionalAuthFetcher)
-  return { data, error, isLoading, mutate }
+	if (title) params.set('title', title)
+	if (author) params.set('author', author)
+	if (tag) params.set('tag', tag)
+
+	const query = params.toString()
+	const endpoint = query
+		? `${API_BASE}/api/recipes/explore?${query}`
+		: `${API_BASE}/api/recipes`
+
+	const { data, error, isLoading } = useSWR(endpoint, optionalAuthFetcher)
+	return { data, error, isLoading }
 }
 
 // Get user's info for profile page
@@ -70,7 +80,7 @@ export function useGetUnits(id) {
 }
 
 // Create new recipe and return success status + recipe id if successful
-export async function postRecipe(title, image, ingredients, description, instructions) {
+export async function postRecipe(title, image, ingredients, description, instructions, tags = []) {
 	try {
 		const ingData = ingredients.map((i) => ({
 			id: i.id,
@@ -78,7 +88,7 @@ export async function postRecipe(title, image, ingredients, description, instruc
 			unit: i.units,
 		}));
 
-		const body = JSON.stringify({ title: title, ingredients: ingData, description: description, instructions: instructions })
+		const body = JSON.stringify({ title: title, ingredients: ingData, description: description, instructions: instructions, tags: tags })
 
 		const formData = new FormData()
 		formData.append("payload", body)
@@ -97,7 +107,7 @@ export async function postRecipe(title, image, ingredients, description, instruc
 }	
 
 // Update recipe
-export async function putRecipe(id, title, image, ingredients, description, instructions) {
+export async function putRecipe(id, title, image, ingredients, description, instructions, tags = []) {
 	try {
 		const ingData = ingredients.map((i) => ({
 			id: i.id,
@@ -105,7 +115,7 @@ export async function putRecipe(id, title, image, ingredients, description, inst
 			unit: i.units,
 		}));
 
-		const body = JSON.stringify({ title: title, ingredients: ingData, description: description, instructions: instructions })
+		const body = JSON.stringify({ title: title, ingredients: ingData, description: description, instructions: instructions, tags: tags })
 
 		const formData = new FormData()
 		formData.append("payload", body)

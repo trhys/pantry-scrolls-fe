@@ -55,6 +55,8 @@ export function RecipeCreator() {
 	const [ingredientSearch, setIngredientSearch] = useState('')
 	const [description, setDescription] = useState('')
 	const [instructions, setInstructions] = useState('')
+	const [tags, setTags] = useState([])
+	const [tagInput, setTagInput] = useState('')
     	
 	/* Get all ingredients from backend to populate select options */
 	const { data: ingredientData, error: ingredientError, isLoading: ingredientIsLoading } = useGetIngredients()
@@ -70,6 +72,8 @@ export function RecipeCreator() {
 			setDescription(recipeData.description)
 			setInstructions(recipeData.instructions)
 			setPreview(recipeData.image_url)
+			setTags(Array.isArray(recipeData.tags) ? recipeData.tags : [])
+			setTagInput('')
 
 			if (recipeData.ingredients) {
 				const loadedRows = recipeData.ingredients.map((ing, index) => ({
@@ -94,6 +98,8 @@ export function RecipeCreator() {
 			setPreview(null);
 			setIngredients([]);
 			setIngredientUnits({});
+			setTags([]);
+			setTagInput('');
 		}
 	}, [editor, editorData])
 
@@ -120,8 +126,8 @@ export function RecipeCreator() {
 		}
 
 		let result = !editor 
-			? await postRecipe(title, image, selectedIngredients, description, instructions)
-			: await putRecipe(params.id, title, image, selectedIngredients, description, instructions)
+			? await postRecipe(title, image, selectedIngredients, description, instructions, tags)
+			: await putRecipe(params.id, title, image, selectedIngredients, description, instructions, tags)
 
 		let { id, ok, message } = result
 
@@ -172,6 +178,35 @@ export function RecipeCreator() {
 		setIngredients(ingredients.filter((row) => row.rowID !== rowID))
 	}
 
+	const addTag = (rawTag) => {
+		const nextTag = rawTag.trim().replace(/^#+/, '')
+		if (!nextTag) return
+		setTags((prevTags) => {
+			if (prevTags.some((tag) => tag.toLowerCase() === nextTag.toLowerCase())) return prevTags
+			return [...prevTags, nextTag]
+		})
+	}
+
+	const handleTagInputChange = (value) => {
+		if (!value.includes(',')) {
+			setTagInput(value)
+			return
+		}
+
+		const parts = value.split(',')
+		const finalizedTags = parts.slice(0, -1)
+		for (const part of finalizedTags) addTag(part)
+		setTagInput(parts[parts.length - 1])
+	}
+
+	const handleTagInputKeyDown = (e) => {
+		if (e.key === 'Enter' || e.key === ',') {
+			e.preventDefault()
+			addTag(tagInput)
+			setTagInput('')
+		}
+	}
+
 	const availableIngredients = ingredientData?.ingredients ?? []
 	const visibleIngredients = availableIngredients.filter((opt) =>
 		opt.name.toLowerCase().includes(ingredientSearch.toLowerCase())
@@ -202,6 +237,51 @@ export function RecipeCreator() {
         onChange={e => setTitle(e.target.value)}
         required
       />
+
+	  <div className="tag-forge-section">
+		<label className="form-label-block">Tags</label>
+		<div className="tag-input-row">
+		  <input
+			type="text"
+			value={tagInput}
+			onChange={(e) => handleTagInputChange(e.target.value)}
+			onKeyDown={handleTagInputKeyDown}
+			onBlur={() => {
+				if (!tagInput.trim()) return
+				addTag(tagInput)
+				setTagInput('')
+			}}
+			placeholder="Add tags (press Enter or comma)..."
+			aria-label="Add recipe tags"
+		  />
+		  <button
+			type="button"
+			className="add-btn-secondary"
+			onClick={() => {
+				addTag(tagInput)
+				setTagInput('')
+			}}
+		  >
+			Add Tag
+		  </button>
+		</div>
+		{tags.length > 0 && (
+		  <div className="tag-chip-list">
+			{tags.map((tag) => (
+			  <button
+				key={tag}
+				type="button"
+				className="tag-chip"
+				onClick={() => setTags(tags.filter((current) => current !== tag))}
+				title="Remove tag"
+			  >
+				#{tag} ×
+			  </button>
+			))}
+		  </div>
+		)}
+		<p className="tag-help-copy">Tip: click a tag chip to remove it.</p>
+	  </div>
 
       <div className="image-upload-frame">
         <label className="image-upload-label">
