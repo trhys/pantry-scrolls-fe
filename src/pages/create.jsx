@@ -125,6 +125,11 @@ export function RecipeCreator() {
 			return
 		}
 
+		if (selectedIngredients.some((row) => !row.units)) {
+			alert('Select a unit for every ingredient before scribing.')
+			return
+		}
+
 		let result = !editor 
 			? await postRecipe(title, image, selectedIngredients, description, instructions, tags)
 			: await putRecipe(params.id, title, image, selectedIngredients, description, instructions, tags)
