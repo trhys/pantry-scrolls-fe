@@ -123,15 +123,19 @@ const { data, error, isLoading } = useGetRecipeFeed()
 
 ---
 
-#### `GET /api/recipes?search=<query>` — Explore Feed (SWR hook)
+#### `GET /api/recipes/explore?title=<query>&author=<query>&tag=<query>` — Explore Feed (SWR hook)
 
 ```js
 import { useExploreFeed } from './src/api/recipes.js'
 
-const { data, error, isLoading, mutate } = useExploreFeed(query)
+const { data, error, isLoading } = useExploreFeed({
+  title: 'stew',
+  author: '',
+  tag: ''
+})
 ```
 
-Falls back to the full recipe feed when `query` is an empty string.
+Any empty/blank filters are ignored. Falls back to the full recipe feed when all filters are empty.
 
 ---
 
@@ -170,11 +174,11 @@ const { data, error, isLoading } = useGetUnits(ingredientId)
 ```js
 import { postRecipe } from './src/api/recipes.js'
 
-const { ok, id, message } = await postRecipe(title, image, ingredients, description, instructions)
+const { ok, id, message } = await postRecipe(title, image, ingredients, description, instructions, tags)
 ```
 
 **Request body:** multipart/form-data  
-- `payload` — JSON string `{ title, ingredients: [{ id, quantity, unit }], description, instructions }`  
+- `payload` — JSON string `{ title, ingredients: [{ id, quantity, unit }], description, instructions, tags }`  
 - `image` — image file  
 
 **Returns:** `{ ok: boolean, id?: string, message?: string }`
@@ -186,7 +190,7 @@ const { ok, id, message } = await postRecipe(title, image, ingredients, descript
 ```js
 import { putRecipe } from './src/api/recipes.js'
 
-const { ok, message } = await putRecipe(id, title, image, ingredients, description, instructions)
+const { ok, message } = await putRecipe(id, title, image, ingredients, description, instructions, tags)
 ```
 
 **Request body:** multipart/form-data  

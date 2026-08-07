@@ -88,6 +88,59 @@ input.recipe-title-input:focus {
   margin-bottom: 32px;
 }
 
+.tag-forge-section {
+  margin-bottom: 24px;
+}
+
+.tag-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tag-input-row input[type="text"] {
+  flex: 1;
+  background-color: rgba(92, 64, 51, 0.05);
+  border: 1px solid rgba(92, 64, 51, 0.4);
+  border-radius: 4px;
+  padding: 10px;
+  color: #1c120c;
+  font-family: 'Metamorphous', serif;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.tag-input-row input[type="text"]:focus {
+  outline: none;
+  border-color: #78350f;
+  background-color: rgba(92, 64, 51, 0.08);
+}
+
+.tag-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag-chip {
+  border: 1px solid rgba(120, 53, 15, 0.4);
+  border-radius: 999px;
+  background-color: rgba(120, 53, 15, 0.09);
+  color: #78350f;
+  font-family: 'Metamorphous', serif;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.tag-help-copy {
+  margin: 8px 0 0 0;
+  color: #5c4331;
+  font-family: 'Metamorphous', serif;
+  font-size: 0.85rem;
+}
+
 .ingredient-forge-section label,
 .form-label-block {
   display: block;

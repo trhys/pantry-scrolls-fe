@@ -24,6 +24,7 @@ export default function Recipe() {
 	const [selectedList, setSelectedList] = useState('')
 	const [selectedQuantity, setSelectedQuantity] = useState(1)
     const [isAdding, setIsAdding] = useState(false)
+	const [showAllTags, setShowAllTags] = useState(false)
 
 	if (isLoading) {
 	    return (
@@ -79,6 +80,27 @@ export default function Recipe() {
           <strong>Scribe:</strong> {recipe.author} <br />
           <strong>Penned:</strong> {formatDate(recipe.created_at)} <br />
           <strong>Amended:</strong> {formatDate(recipe.updated_at)} <br />
+          {recipe.tags?.length > 0 && (
+            <div className="recipe-tags-section">
+              <strong>Tags:</strong>
+              <div className="recipe-tags-list">
+                {(showAllTags ? recipe.tags : recipe.tags.slice(0, 4)).map((tag) => (
+                  <span key={`${recipe.id}-${tag}`} className="recipe-tag-chip">
+                    #{tag}
+                  </span>
+                ))}
+                {recipe.tags.length > 4 && (
+                  <button
+                    type="button"
+                    className="recipe-tags-toggle"
+                    onClick={() => setShowAllTags((prev) => !prev)}
+                  >
+                    {showAllTags ? 'See less' : `See more (${recipe.tags.length - 4})`}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
           <button 
             type="button" 
             className="open-add-modal-btn"
